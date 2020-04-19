@@ -5,3 +5,41 @@
 .NavBar {
     /* propertys here */
 }
+
+
+.navbar 
+{ background-color: #222; }
+
+  a.nav-bar-link,.navbar-nav,.navbar-light  
+  {
+    text-decoration: none;
+    color: #9FFFCB;
+  }
+
+  a,.navbar-nav,.navbar-light,.navbar-brand   :hover
+  {
+      color: white; 
+  }
+
+  a
+  {
+      
+      padding: .5rem 1rem;  
+  }
+  
+
+  .navbar-brand 
+  {
+    font-size: 1.4em;
+    color: #9FFFCB;
+  }
+
+  .form-center {
+    position: absolute !important;
+    left: 25%;
+    right: 25%;
+  }
+
+ 
+  
+  
