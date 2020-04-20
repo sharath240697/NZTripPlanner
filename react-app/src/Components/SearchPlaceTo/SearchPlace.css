@@ -1,0 +1,26 @@
+/*
+ * SearchPlace css File
+*/
+
+input[type=text] {
+    background-color: #f1f1f1;
+    width: 100%;
+  }
+
+#b
+{
+    size: 30%;
+}
+.SearchPlace {
+    /* propertys here */
+}
+
+input  {
+    border: 1px solid transparent;
+    background-color: #f1f1f1;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+
+  
