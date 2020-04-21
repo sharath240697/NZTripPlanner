@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import './SavedTrip.css';
+import React, { Component } from "react";
+import TripTable from "../TripTable/TripTable";
+import "./SavedTrip.css";
 
 class SavedTrip extends Component {
   // constructor(props){
-    // super(props);
-    // this.state = {};
+  // super(props);
+  // this.state = {};
   // }
 
   // componentWillMount(){}
@@ -18,8 +19,9 @@ class SavedTrip extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Saved Trip</h1>
+      <div className="SavedTrip">
+        <h3>Previous Trips:</h3>
+        <TripTable className="TripTable" />
       </div>
     );
   }

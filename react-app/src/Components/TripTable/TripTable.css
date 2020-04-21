@@ -1,0 +1,7 @@
+.Table-Container {
+  max-width: 80%;
+}
+
+.Header .MuiTableCell-head {
+  font-weight: 700;
+}
