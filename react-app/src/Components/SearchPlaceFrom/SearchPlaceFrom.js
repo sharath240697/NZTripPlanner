@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import './SearchPlace.css';
 import { connect } from 'react-redux'
 
@@ -14,6 +14,7 @@ import {store} from '../../index'
 const SearchPlace = (props) => {
 
   console.log(props.placeholder)
+  console.log('in searchfrom place component');
   let suggestions_arr;
   const [address, setaddress] = useState(props.description);
 
@@ -32,6 +33,7 @@ const SearchPlace = (props) => {
      suggestions_arr.map(suggestion => {
       if(suggestion.placeId===place_id)
        {place=suggestion;}
+       return null;
     }) 
 
       let promise = geocodeByAddress(address)
@@ -39,9 +41,8 @@ const SearchPlace = (props) => {
         return getLatLng(results[0]);})
       .then(latLng => {console.log('Success', latLng);place_location=latLng})
       .catch(error => console.error('Error', error));
-
       let result = await promise;
-      
+      console.log(result);
       console.log({ description: address, placeId: place.placeId, types: place.types, place_location: place_location});
       store.dispatch(updateFromPlace({ description: address, placeId: place.placeId, types: place.types, place_location: place_location}));
       

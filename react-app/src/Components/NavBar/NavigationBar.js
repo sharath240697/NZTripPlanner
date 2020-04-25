@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, Navbar, Form, FormControl } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
 import  './NavigationBar.css';
@@ -22,22 +22,26 @@ const Styles = styled.div`
     right: 25%;
   }
 `;
-export const NavigationBar = () => (
-  <Styles>
+export const NavigationBar = () => {
+  console.log('in Navigationbar.js file')
 
-    <Link to='/plantrip'></Link>
-    <Navbar expand="lg">
-      <Navbar.Brand ><Link className="nav-bar-link" to='/'>  NZ Trip Plan   </Link> </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="ml-auto">
-        <Nav.Item>    <Link className="nav-bar-link" to='/plantrip'>  Plan Trip   </Link>    </Nav.Item> 
-        <Nav.Item>  <Link className="nav-bar-link" to='/savedtrip'>  Saved Trip  </Link>  </Nav.Item>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
-  </Styles>
-)
+  return (
+    <Styles>
+      <Link to='/plantrip'></Link>
+      <Navbar expand="lg">
+        <Navbar.Brand ><Link className="nav-bar-link" to='/'>  NZ Trip Plan   </Link> </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+         <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+          <Nav.Item>    <Link className="nav-bar-link" to='/plantrip'>  Plan Trip   </Link>    </Nav.Item> 
+          <Nav.Item>  <Link className="nav-bar-link" to='/savedtrip'>  Saved Trip  </Link>  </Nav.Item>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
+    </Styles>
+  );
+
+}
 
 export default NavigationBar;
 
