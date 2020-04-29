@@ -20,7 +20,8 @@ const SearchPlace = (props) => {
 
   const handleChange = add => {
    setaddress(add);
-   
+   store.dispatch(updateFromPlace({ description: add, placeId: "", types: [], place_location: {lat:undefined, lng:undefined}}));
+    console.log('after handle change and dispatching action');
   };
  
    const handleSelect = async (address,place_id) => 

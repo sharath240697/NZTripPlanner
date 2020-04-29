@@ -8,7 +8,7 @@ export const initialState = {
       description: "",
       placeId: "",
       types: [],
-      place_location: {lat:0 , lng:0}  },
+      place_location: {lat:undefined , lng:undefined}  },
     
       to: {
       placeholder: "To",
@@ -18,10 +18,14 @@ export const initialState = {
     place_location: {lat:undefined , lng:undefined}  
     },
 
-    from_to_validation: {       // state variable which holds result of validation of from to adress object obtained from searchimng
+    from_to_validation: {       // state variable which holds result of validation of from to address object obtained from searching
       from: false,
       to: false
     },
+
+    tourist_places:{ type: ['tourist_attraction','amusement_park','aquarium','art_gallery','church','hindu_temple','zoo','museum','place_of_worship']} , // more plcae type should be added later
+
+    nearby_tourist_attractions: {attractions: []},
 
     loading: {
       loading_status: true
@@ -40,8 +44,12 @@ export const initialState = {
         {
           console.log(state);
           console.log(action.payload);
-          
-          return {...state, from_to_validation: {from: true, to:state.from_to_validation.to },from: {
+          var status;
+          if(action.payload.place_location.lat===undefined)
+              {status=false}
+          else
+              {status=true}
+          return {...state, from_to_validation: {from: status, to:state.from_to_validation.to },from: {placeholder: "From",
             description: action.payload.description,
     placeId: action.payload.placeId,
     types: action.payload.types,
@@ -53,8 +61,12 @@ export const initialState = {
           {
             console.log(state);
             console.log(action.payload);
-            
-            return {...state, from_to_validation: {from: state.from_to_validation.from, to: true }, to: {
+            var status;
+            if(action.payload.place_location.lat===undefined)
+              {status=false}
+          else
+              {status=true}
+            return {...state, from_to_validation: {from: state.from_to_validation.from, to: status }, to: {placeholder: "To",
               description: action.payload.description,
       placeId: action.payload.placeId,
       types: action.payload.types,
@@ -81,6 +93,13 @@ export const initialState = {
                 console.log("in FROMTOVALIDATION case of placereducers.js")
                 return {...state, from_to_validation: {from: action.payload.from, to: action.payload.to}}
               }
+
+          case actions.SAVENEARBYATTRACTIONS:
+            {
+              console.log("in SAVENEARBYATTRACTIONS case of placereducres.js")
+              console.log(action.payload)
+              return {...state,nearby_tourist_attractions: {attractions: action.payload }}
+            }
 
       default:
         return state

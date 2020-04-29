@@ -1,5 +1,6 @@
 const  Places = require("google-places-web").default;
 var express = require('express');
+const bodyParser = require('body-parser');
 var router = express.Router();
 
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
@@ -11,19 +12,22 @@ router.get('/', function(req, res) {
 module.exports = router; 
 
 
-router.get('/nearbyplaces', async function(req, res, ){
+router.post('/nearbyplaces', async function(req, res, ){
 
   
     try {
+
+        console.log(req.body);
+        const parms = req.body;
         const response = await Places.nearbysearch({
-          location: "-37.814,144.96332", // LatLon delimited by ,
+          location: ""+parms.lat+","+parms.lng, // LatLon delimited by ,
            radius: "500",  // Radius cannot be used if rankBy set to DISTANCE
-          type: ["food"], // Undefined type will return all types
+          type: parms.type, // Undefined type will return all types
           //rankby: "distance" // See google docs for different possible values
         });
        
         const { status, results, next_page_token, html_attributions } = response;
-        res.send({  results })
+        res.send(results)
       } catch (error) {
         console.log(error);
       }
