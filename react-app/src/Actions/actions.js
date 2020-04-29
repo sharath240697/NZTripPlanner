@@ -2,6 +2,7 @@ export const CHANGE_FROM_PLACE = 'CHANGE_FROM_PLACE'
 export const CHANGE_TO_PLACE = 'CHANGE_TO_PLACE'
 export const LOADING = 'LOADING';
 export const TESTDATA = 'TESTDATA';
+export const FROMTOVALIDATION = 'FROMTOVALIDATION'
 
 export const updateFromPlace = from => ({
     type: CHANGE_FROM_PLACE,
@@ -25,4 +26,12 @@ export const updateFromPlace = from => ({
     type: TESTDATA,
     payload: data
   }
-} 
+}
+
+export const setfromtovalidation = (validationstate) => {
+  console.log('in action.js ==> setfromtovalidation method');
+  return {
+    type: FROMTOVALIDATION,
+    payload: validationstate
+  }
+}
