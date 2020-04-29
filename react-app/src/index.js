@@ -13,6 +13,8 @@ import rootReducer from './Reducers/index'
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk))) ///Creating Redus store
 
 
+console.log('in src/index.js');
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

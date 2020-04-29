@@ -15,8 +15,14 @@ export const initialState = {
     placeId: "",
     types: [],
     place_location: {lat:0 , lng:0}  
+    },
+    loading: {
+      loading_status: true
+    },
+    testdata: {
+      status: '',
+      message: ''
     }
-    
   }
   
   export default function myReducer(state = initialState, action) {
@@ -47,6 +53,20 @@ export const initialState = {
       place_location: action.payload.place_location,  
             }};
           }
+
+        case actions.LOADING:
+          {
+              console.log("in LOADING case of placereducers.js")
+              return {...state,loading: {loading_status: true}}
+          }
+
+
+          case actions.TESTDATA:
+            {
+              console.log("in TESTDATA case of placereducers.js")
+              return {...state,loading: {loading_status: false},
+              testdata: {status: action.payload.status,message:action.payload.message}}
+            }
       default:
         return state
     }
