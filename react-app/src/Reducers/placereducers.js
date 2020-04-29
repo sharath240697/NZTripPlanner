@@ -9,23 +9,31 @@ export const initialState = {
       placeId: "",
       types: [],
       place_location: {lat:0 , lng:0}  },
-    to: {
+    
+      to: {
       placeholder: "To",
       description: "",
     placeId: "",
     types: [],
-    place_location: {lat:0 , lng:0}  
+    place_location: {lat:undefined , lng:undefined}  
     },
+
+    from_to_validation: {       // state variable which holds result of validation of from to adress object obtained from searchimng
+      from: false,
+      to: false
+    },
+
     loading: {
       loading_status: true
     },
+
     testdata: {
       status: '',
       message: ''
     }
   }
   
-  export default function myReducer(state = initialState, action) {
+  export default function placeReducer(state = initialState, action) {
     switch (action.type) 
     {
       case actions.CHANGE_FROM_PLACE:
@@ -33,7 +41,7 @@ export const initialState = {
           console.log(state);
           console.log(action.payload);
           
-          return {...state, from: {
+          return {...state, from_to_validation: {from: true, to:state.from_to_validation.to },from: {
             description: action.payload.description,
     placeId: action.payload.placeId,
     types: action.payload.types,
@@ -46,7 +54,7 @@ export const initialState = {
             console.log(state);
             console.log(action.payload);
             
-            return {...state, to: {
+            return {...state, from_to_validation: {from: state.from_to_validation.from, to: true }, to: {
               description: action.payload.description,
       placeId: action.payload.placeId,
       types: action.payload.types,
@@ -67,6 +75,13 @@ export const initialState = {
               return {...state,loading: {loading_status: false},
               testdata: {status: action.payload.status,message:action.payload.message}}
             }
+
+          case actions.FROMTOVALIDATION:
+              {
+                console.log("in FROMTOVALIDATION case of placereducers.js")
+                return {...state, from_to_validation: {from: action.payload.from, to: action.payload.to}}
+              }
+
       default:
         return state
     }

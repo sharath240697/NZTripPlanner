@@ -14,7 +14,7 @@ const App = () =>
 console.log('in App Component');
 
     
-    return (
+    return (  
       <div className="App" >
           <NavBar/>
           <br/>
