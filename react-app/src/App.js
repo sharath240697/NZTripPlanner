@@ -1,32 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import logo from './logo.svg';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/NavBar/NavigationBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
-import {store} from './index'
 import Dummy from './Components/Dummy/Dummy';
 
 
+const App = () =>
+{
+ 
+console.log('in App Component');
 
-
-
-
-
-
-
-
-
-class App extends React.Component {
-  
-  constructor(props)
-  {
-    super(props);   
-  }
-  render(){
     
     return (
       <div className="App" >
@@ -35,20 +21,30 @@ class App extends React.Component {
           <br/>
           <Dummy></Dummy>
           <Switch>
+            {console.log('in app inside Switch component')}
                <Route exact path="/" component={PlanTrip} />
+               {console.log('in app inside Switch after 1st route component')}
                <Route  path="/plantrip" component={PlanTrip} />
                 <Route path="/savedtrip" component={SavedTrip} />
           </Switch>
-          
-        
-         
-
       </div>
    );
-    }
-  
 }
 
 
 
 export default (App);
+
+
+
+/*,
+    {
+      method: 'GET', // *GET, POST, PUT, DELETE, etc.
+      mode: 'cors', // no-cors, *cors, same-origin
+      cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+      
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json'
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      }} */
