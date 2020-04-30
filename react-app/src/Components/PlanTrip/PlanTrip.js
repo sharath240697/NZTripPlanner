@@ -6,8 +6,9 @@ import Button from '../Button/Button';
 import { connect } from 'react-redux'
 import {setfromtovalidation} from '../../Actions/actions';
 import {fetchnearbyplaces} from '../../Actions/expressActions';
+import {fetchweatherdata} from '../../Actions/expressActions';
 import {store} from '../../index'
-import NearbyPlaces from '../NearbyPlaces/NearbyPlaces'
+import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
 
 const mapStateToProps = state => ( 
           
@@ -22,7 +23,7 @@ const mapStateToProps = state => (
  } ) 
 
  const mapDispatchToProps = {
-   setfromtovalidation,fetchnearbyplaces
+   setfromtovalidation,fetchnearbyplaces,fetchweatherdata,
 }
 
 
@@ -39,6 +40,7 @@ const PlanTrip = (props) => {
     if(props.from_validation && props.to_validation){       
       props.fetchnearbyplaces({lat: props.to_lat, lng: props.to_lng, type: props.place_type})  // redux thunks dispatch
       console.log("in Plantrip component navigate function if block after thunk dispatch")
+      props.fetchweatherdata({lat: props.to_lat, lng:props.to_lng});
     }
     else{    
       console.log('props.from_lat '+props.from_lat)
