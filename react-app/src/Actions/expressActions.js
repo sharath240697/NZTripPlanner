@@ -39,3 +39,27 @@ export function fetchnearbyplaces(data)
         }
     }
 }
+
+
+export  function fetchweatherdata(data)
+{
+
+    console.log('inside return in expressActions.js fetchtweatherdata method ');
+    return async dispatch => {
+        console.log('inside return in expressActions.js fetchtnearbyplaces method ');
+        console.log(JSON.stringify(data));
+        try {
+            const url = 'http://api.openweathermap.org/data/2.5/weather?units=Metric&lat='+data.lat+'&lon='+data.lng+'&appid=aa9f26c33a1a8c68323a4907a0357fe6';
+            console.log(url);
+            const response = await fetch(url);
+            const result = await response.json();
+            console.log(result);
+
+            // appropriate actions must be dispatched to save the obtained state
+        } catch (error) {
+            console.log('BIGG FATTT ERROOORRR! in expressActions.js fetchnearbyplaces method')
+            console.log(error);
+        }
+    }
+    
+}
