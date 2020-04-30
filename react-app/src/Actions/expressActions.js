@@ -23,6 +23,7 @@ export function fetchnearbyplaces(data)
     return async dispatch => {
         console.log('inside return in expressActions.js fetchtnearbyplaces method ');
         dispatch(actions.loading());
+        
         console.log(JSON.stringify(data));
         try {
             const response = await fetch('http://localhost:9000/NZTripPlanner/nearbyplaces', {
