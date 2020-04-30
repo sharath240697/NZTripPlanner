@@ -27,6 +27,8 @@ export const initialState = {
 
     nearby_tourist_attractions: {attractions: []},
 
+    browser_location: {accuracy: undefined, altitude:undefined, altitudeAccuracy: undefined, heading: undefined,lat:undefined,lng: undefined},
+
     loading: {
       loading_status: true
     },
@@ -61,7 +63,7 @@ export const initialState = {
           {
             console.log(state);
             console.log(action.payload);
-            var status;
+            
             if(action.payload.place_location.lat===undefined)
               {status=false}
           else
@@ -99,6 +101,13 @@ export const initialState = {
               console.log("in SAVENEARBYATTRACTIONS case of placereducres.js")
               console.log(action.payload)
               return {...state,nearby_tourist_attractions: {attractions: action.payload }}
+            }
+
+          case actions.SETBROWSERLOCATION:
+            {
+              console.log("in SETBROWSERLOCATION case of placereducres.js")
+              console.log(action.payload)
+              return {...state,browser_location: {accuracy: action.payload.accuracy, altitude:action.payload.altitude, heading:action.payload.heading,lat:action.payload.latitude,lng:action.payload.longitude}}
             }
 
       default:
