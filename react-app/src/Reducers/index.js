@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
 import postsReducer from './postsReducer';
-import myReducer from './placereducers'
+import placeReducer from './placereducers'
 
 const rootReducer = combineReducers({
   posts: postsReducer,
-  places: myReducer
+  places: placeReducer
 })
 
 export default rootReducer
