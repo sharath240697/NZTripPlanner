@@ -4,6 +4,7 @@ export const LOADING = 'LOADING';
 export const TESTDATA = 'TESTDATA';
 export const FROMTOVALIDATION = 'FROMTOVALIDATION'
 export const SAVENEARBYATTRACTIONS = 'SAVENEARBYATTRACTIONS'
+export const SETBROWSERLOCATION = 'SETBROWSERLOCATION'
 
 export const updateFromPlace = from => ({
     type: CHANGE_FROM_PLACE,
@@ -43,5 +44,14 @@ export const savenearbyattractions = (data) => {
   return {
     type: SAVENEARBYATTRACTIONS,
     payload: data
+  }
+}
+
+export const setbrowserlocation = (browserlocation) => {
+  console.log('in action.js ==> setbrowserlocation method')
+  console.log(browserlocation)
+  return {
+    type: SETBROWSERLOCATION,
+    payload: browserlocation
   }
 }
