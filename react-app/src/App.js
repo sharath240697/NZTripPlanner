@@ -8,6 +8,7 @@ import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
 import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
+import OAuth from './Components/OAuth/OAuth';
 
 
 
@@ -23,7 +24,7 @@ const mapStateToProps = state => (
 const App = (props) =>
 {
  
-console.log('in App Component');
+  console.log('in App Component');
 
 
 utils.setBrowserLocation();
@@ -32,6 +33,7 @@ utils.setBrowserLocation();
     return (  
       <div className="App" >
           <NavBar/>
+          <OAuth/>
           <br/>
           <br/>
     <h6>Browser Location lat: {props.browser_lat} lng: {props.browser_lng}</h6>
