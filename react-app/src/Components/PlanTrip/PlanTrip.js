@@ -9,6 +9,7 @@ import {fetchnearbyplaces} from '../../Actions/expressActions';
 import {fetchweatherdata} from '../../Actions/expressActions';
 import {store} from '../../index'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
+import MyMapComponent from '../Map/MyMapComponent';
 
 const mapStateToProps = state => ( 
           
@@ -66,6 +67,7 @@ const PlanTrip = (props) => {
            <Button className='button' name='Navigate' onClick={navigate}></Button>
            <br/><br/>
               <NearbyPlaces />
+              <MyMapComponent/>
            </div>
     );
 }

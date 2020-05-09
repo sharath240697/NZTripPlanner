@@ -6,9 +6,10 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/NavBar/NavigationBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
+import MyMapComponent from './Components/Map/MyMapComponent';
 import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
-
+//import StyledMapWithAnInfoBox from './Components/Map/StyledMapWithAnInfoBox';
 
 
 const mapStateToProps = state => ( 
@@ -40,9 +41,11 @@ utils.setBrowserLocation();
                <Route exact path="/" component={PlanTrip} />
                {console.log('in app inside Switch after 1st route component')}
                <Route  path="/plantrip" component={PlanTrip} />
-                <Route path="/savedtrip" component={SavedTrip} />
+                <Route path="/savedtrip" component={SavedTrip} />                
           </Switch>
+         
       </div>
+      
    );
 }
 
