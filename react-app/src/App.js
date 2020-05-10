@@ -40,9 +40,11 @@ utils.setBrowserLocation();
                <Route exact path="/" component={PlanTrip} />
                {console.log('in app inside Switch after 1st route component')}
                <Route  path="/plantrip" component={PlanTrip} />
-                <Route path="/savedtrip" component={SavedTrip} />
+                <Route path="/savedtrip" component={SavedTrip} />                
           </Switch>
+         
       </div>
+      
    );
 }
 
