@@ -3,7 +3,7 @@ var express = require('express');
 const bodyParser = require('body-parser');
 var router = express.Router();
 
-Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
+Places.apiKey = "AIzaSyBjwnK_zvDGQokuzDJ0NVnR979L_KNEYuo";
 
 router.get('/', function(req, res) {
     res.send({status: 'success', message: 'this works!'})
