@@ -9,13 +9,12 @@ import {fetchnearbyplaces} from '../../Actions/expressActions';
 import {fetchweatherdata} from '../../Actions/expressActions';
 import {store} from '../../index'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
-import MapAndDirection from '../Map/MapAndDirection';
 
 const mapStateToProps = state => ( 
           
   {
-    browser_lat: state.places.browser_location.lat,
-    browser_lng: state.places.browser_location.lng,
+    from_validation: state.places.from_to_validation.from,
+    to_validation: state.places.from_to_validation.to,
     from_lat: state.places.from.place_location.lat,
     from_lng: state.places.from.place_location.lng,
     to_lat: state.places.to.place_location.lat,
@@ -67,7 +66,6 @@ const PlanTrip = (props) => {
            <Button className='button' name='Navigate' onClick={navigate}></Button>
            <br/><br/>
               <NearbyPlaces />
-              <MapAndDirection />
            </div>
     );
 }
