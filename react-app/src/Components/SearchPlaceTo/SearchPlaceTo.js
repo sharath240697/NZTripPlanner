@@ -17,7 +17,6 @@ const SearchPlace = (props) => {
   let suggestions_arr;
   const [address, setaddress] = useState(props.description);
 
- 
   const handleChange = add => {
    setaddress(add);
    store.dispatch(updateToPlace({ description: add, placeId: "", types: [], place_location: {lat:undefined, lng:undefined}}));
