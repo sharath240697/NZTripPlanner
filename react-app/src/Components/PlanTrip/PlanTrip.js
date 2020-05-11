@@ -17,6 +17,8 @@ const mapStateToProps = state => (
   {
     from_validation: state.places.from_to_validation.from,
     to_validation: state.places.from_to_validation.to,
+    from_placeId: state.places.from.placeId,
+    to_placeId: state.places.to.placeId,
     from_lat: state.places.from.place_location.lat,
     from_lng: state.places.from.place_location.lng,
     to_lat: state.places.to.place_location.lat,
@@ -24,6 +26,7 @@ const mapStateToProps = state => (
     place_type: state.places.tourist_places.type,
     browser_lat: state.places.browser_location.lat,
     browser_lng: state.places.browser_location.lng,
+    placesOnMap: state.places.placesOnMap
   })
 
 const mapDispatchToProps = {
@@ -54,6 +57,7 @@ const PlanTrip = (props) => {
     }
   }
 
+  const waypoints =  props.placesOnMap.map(place => place.place_id)
   return (
     <div>
       {(!props.from_validation || !props.to_validation) && <h2>Please select your Start location and destination</h2>}<br /><br />
@@ -63,14 +67,12 @@ const PlanTrip = (props) => {
         <SearchPlaceTo />
       </div>
       <br /><br />
-
-      <Button className='button' name='Navigate' onClick={navigate}></Button>
       <br /><br />
       <div className="MapandPlacesContainer">
-        {props.from_validation && props.to_validation && <MapComponent origin={{ lat: props.from_lat, lng: props.from_lng }} destination={{ lat: props.to_lat, lng: props.to_lng }} browser={{ lat: props.browser_lat, lng: props.browser_lng }}></MapComponent>}
+        {props.from_validation && props.to_validation && <MapComponent origin={props.from_placeId} destination={props.to_placeId} browser={{ lat: props.browser_lat, lng: props.browser_lng }} waypoints = {waypoints} ></MapComponent>}
         {(!props.from_validation || !props.to_validation) && <MapComponentDefault browser={{ lat: props.browser_lat, lng: props.browser_lng }}></MapComponentDefault>}
 
-        <NearbyPlaces />
+        <NearbyPlaces func={navigate()}/>
       </div>
     </div>
   );

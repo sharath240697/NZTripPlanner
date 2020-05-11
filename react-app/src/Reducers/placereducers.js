@@ -118,16 +118,19 @@ export default function placeReducer(state = initialState, action) {
 
     case actions.ADDPLACETOMAP:
       {
-        let index = state.placesOnMap.findIndex(place => place.id == action.payload.id);
-        if (index == -1) {
-          return { ...state, placesOnMap: [...state.placesOnMap, action.payload] };
+        console.log(state);
+        let index = state.placesOnMap.findIndex(place => place.id === action.payload.id);
+        if (index === -1) {
+          const obj = { ...state, placesOnMap: [...state.placesOnMap, action.payload] };
+          console.log(obj)
+          return obj;
         }
         return state;
       }
 
     case actions.REMOVEPLACEFROMMAP:
       {
-        return { ...state, placesOnMap: [...state.placesOnMap.filter((place) => place.id != action.payload.id)] }
+        return { ...state, placesOnMap: [...state.placesOnMap.filter((place) => place.id !== action.payload.id)] }
       }
 
     default:
