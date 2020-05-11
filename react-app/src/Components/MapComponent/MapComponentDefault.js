@@ -6,7 +6,8 @@ import {withScriptjs, withGoogleMap, GoogleMap, DirectionsRenderer, Marker} from
 
 
 class MapComponent extends React.Component {
-  constructor(props){
+  constructor(props){ 
+
     console.log('in MapComponent Class')
     super(props)
   }
