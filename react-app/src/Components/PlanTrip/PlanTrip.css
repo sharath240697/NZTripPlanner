@@ -22,3 +22,10 @@
   padding: 10px;
   font-size: 16px;
 }
+
+.MapandPlacesContainer {
+  display: flex;
+  flex-direction: row;
+  margin: 10px 60px 60px 60px;
+  justify-content: space-evenly;
+}
