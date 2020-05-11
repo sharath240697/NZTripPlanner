@@ -2,6 +2,11 @@
  * NearbyPlaces css File
 */
 
+.NearbyPlaces {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
 .PlaceCard {
   /* propertys here */
   max-width: 500px;
@@ -15,6 +20,10 @@
 .Media {
   height: 100%;
   width: 50%;
+  display: flex;
+  align-items: center;
+  color: grey;
+  justify-content: center;
 }
 
 .Content {
@@ -35,3 +44,4 @@
  .Content button {
    min-width: 30px;
  }
+

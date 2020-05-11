@@ -5,26 +5,29 @@ export const TESTDATA = 'TESTDATA';
 export const FROMTOVALIDATION = 'FROMTOVALIDATION'
 export const SAVENEARBYATTRACTIONS = 'SAVENEARBYATTRACTIONS'
 export const SETBROWSERLOCATION = 'SETBROWSERLOCATION'
+export const ADDPLACETOMAP = 'ADDPLACETOMAP'
+export const REMOVEPLACEFROMMAP = 'REMOVEPLACEFROMMAP'
 
 export const updateFromPlace = from => ({
-    type: CHANGE_FROM_PLACE,
-    payload: from,
-  })
-  
-  export const updateToPlace = to => ({
-    type: CHANGE_TO_PLACE,
-    payload: to,
-  })
+  type: CHANGE_FROM_PLACE,
+  payload: from,
+})
 
-  export const loading = () => {
-    console.log('in actions.js ==>  loading method')
-    return {
+export const updateToPlace = to => ({
+  type: CHANGE_TO_PLACE,
+  payload: to,
+})
+
+export const loading = () => {
+  console.log('in actions.js ==>  loading method')
+  return {
     type: LOADING,
-  }}
+  }
+}
 
-  export const gettestdata = (data) => {
-    console.log('in actions.js ==>  gettestdata method')
-    return {
+export const gettestdata = (data) => {
+  console.log('in actions.js ==>  gettestdata method')
+  return {
     type: TESTDATA,
     payload: data
   }
@@ -53,5 +56,21 @@ export const setbrowserlocation = (browserlocation) => {
   return {
     type: SETBROWSERLOCATION,
     payload: browserlocation
+  }
+}
+
+export const addplacetomap = (place) => {
+  console.log('called add place actions')
+  return {
+    type: ADDPLACETOMAP,
+    payload: place
+  }
+}
+
+export const removeplacefrommap = (place) => {
+  console.log('called remove place actions')
+  return {
+    type: REMOVEPLACEFROMMAP,
+    payload: place
   }
 }
