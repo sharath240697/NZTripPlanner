@@ -8,6 +8,8 @@ import {setfromtovalidation} from '../../Actions/actions';
 import {fetchnearbyplaces} from '../../Actions/expressActions';
 import {fetchweatherdata} from '../../Actions/expressActions';
 import {store} from '../../index'
+import MapComponent from '../MapComponent/MapComponent'
+import MapComponentDefault from '../MapComponent/MapComponentDefault'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
 
 const mapStateToProps = state => ( 
@@ -20,6 +22,8 @@ const mapStateToProps = state => (
     to_lat: state.places.to.place_location.lat,
     to_lng: state.places.to.place_location.lng,
     place_type: state.places.tourist_places.type,
+    browser_lat: state.places.browser_location.lat,
+    browser_lng: state.places.browser_location.lng,
  } ) 
 
  const mapDispatchToProps = {
@@ -65,6 +69,9 @@ const PlanTrip = (props) => {
 
            <Button className='button' name='Navigate' onClick={navigate}></Button>
            <br/><br/>
+        {   props.from_validation && props.to_validation && <MapComponent origin = {{lat: props.from_lat, lng: props.from_lng}} destination= {{lat: props.to_lat, lng: props.to_lng}} browser={{lat: props.browser_lat, lng: props.browser_lng}}></MapComponent>}
+        {   (!props.from_validation || !props.to_validation) && <MapComponentDefault browser={{lat: props.browser_lat, lng: props.browser_lng}}></MapComponentDefault>}
+
               <NearbyPlaces />
            </div>
     );
