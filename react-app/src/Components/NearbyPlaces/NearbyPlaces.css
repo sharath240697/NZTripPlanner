@@ -3,5 +3,46 @@
 */
 
 .NearbyPlaces {
-    /* propertys here */
+  max-height: 600px;
+  overflow-y: auto;
+  width: 45%;
 }
+
+.PlaceCard {
+  /* propertys here */
+  max-width: 500px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 200px;
+  margin-bottom: 10px;
+}
+
+.Media {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  color: grey;
+  justify-content: center;
+}
+
+.Content {
+  display: inline;
+  margin-left: 15px;
+  text-align: left;
+}
+
+.Content h3 {
+    font-size: 1.25rem;
+ }
+
+ .Content p {
+   color: grey;
+   font-size: 0.9rem;
+ }
+
+ .Content button {
+   min-width: 30px;
+ }
+

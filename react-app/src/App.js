@@ -36,7 +36,6 @@ utils.setBrowserLocation();
           <OAuth/>
           <br/>
           <br/>
-    <h6>Browser Location lat: {props.browser_lat} lng: {props.browser_lng}</h6>
           <Switch>
             {console.log('in app inside Switch component')}
                <Route exact path="/" component={PlanTrip} />

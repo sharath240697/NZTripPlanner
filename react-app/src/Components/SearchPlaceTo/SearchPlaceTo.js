@@ -27,15 +27,19 @@ const SearchPlace = (props) => {
    const handleSelect = async (address,place_id) => 
   {
 
-    console.log('in Search Place component handleSelect method');
-
+    if(place_id!==null)
+    {
+      console.log('in Search Place component handleSelect method');
+    console.log(address+" "+place_id)
     let place_location;
     let place;
-     suggestions_arr.map(suggestion => {
-      if(suggestion.placeId===place_id)
-       {place=suggestion;}
-       return null;
-    }) 
+     
+      suggestions_arr.map(suggestion => {
+        if(suggestion.placeId===place_id)
+         {place=suggestion;}
+         return null;
+      }) 
+     
 
       let promise = geocodeByAddress(address)
       .then(results => {console.log(results); handleChange(place.description);
@@ -46,7 +50,11 @@ const SearchPlace = (props) => {
       console.log(result);
       console.log({ description: address, placeId: place.placeId, types: place.types, place_location: place_location});
       store.dispatch(updateToPlace({ description: address, placeId: place.placeId, types: place.types, place_location: place_location}));
-      
+    
+    }  
+    else{
+      handleChange("");
+    }
      
       
   };

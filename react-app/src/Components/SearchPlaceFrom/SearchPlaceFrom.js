@@ -27,7 +27,9 @@ const SearchPlace = (props) => {
    const handleSelect = async (address,place_id) => 
   {
 
-    console.log('in Search Place component handleSelect method');
+    if(place_id!==null)
+    {
+      console.log('in Search Place component handleSelect method');
 
     let place_location;
     let place;
@@ -47,7 +49,12 @@ const SearchPlace = (props) => {
       console.log({ description: address, placeId: place.placeId, types: place.types, place_location: place_location});
       store.dispatch(updateFromPlace({ description: address, placeId: place.placeId, types: place.types, place_location: place_location}));
       
-     
+
+    }     
+    else
+    {
+      handleChange("");
+    }
       
   };
    
