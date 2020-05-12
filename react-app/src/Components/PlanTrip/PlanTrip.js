@@ -24,6 +24,7 @@ const mapStateToProps = state => (
     to_lat: state.places.to.place_location.lat,
     to_lng: state.places.to.place_location.lng,
     place_type: state.places.tourist_places.type,
+    lodging_resturant_types: state.places.resturant_lodging_places.type,
     browser_lat: state.places.browser_location.lat,
     browser_lng: state.places.browser_location.lng,
     placesOnMap: state.places.placesOnMap
@@ -44,7 +45,7 @@ const PlanTrip = (props) => {
     console.log(props.to_validation + ' props.to_validation');
     console.log("in Plantrip component navigate function")  // if else block validates from to lat lng value and dispatches appropriate actions 
     if (props.from_validation && props.to_validation) {
-      props.fetchnearbyplaces({ lat: props.to_lat, lng: props.to_lng, type: props.place_type })  // redux thunks dispatch
+      props.fetchnearbyplaces({ lat: props.to_lat, lng: props.to_lng, places_type: props.place_type,resturant_type: props.lodging_resturant_types })  // redux thunks dispatch
       console.log("in Plantrip component navigate function if block after thunk dispatch")
       props.fetchweatherdata({ lat: props.to_lat, lng: props.to_lng });
     }

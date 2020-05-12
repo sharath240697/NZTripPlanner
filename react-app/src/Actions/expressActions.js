@@ -11,6 +11,7 @@ export function fetchtestobject()
                 const data = await response.json();
                 console.log(data);
                 dispatch(actions.gettestdata(data));
+
             } catch (error) {
                 console.log('BIGG FATTT ERROOORRR! in expressActions.js fetchtestObject method');
             }
@@ -26,14 +27,27 @@ export function fetchnearbyplaces(data)
         
         console.log(JSON.stringify(data));
         try {
-            const response = await fetch('http://localhost:9000/NZTripPlanner/nearbyplaces', {
+            const data1 = {lat: data.lat, lng: data.lng, type: data.places_type }; 
+            const data2 = {lat: data.lat, lng: data.lng, type: data.resturant_type }; 
+            console.log('requesting nearby tourist attractions')
+            const nearby_tourist_attractions = await fetch('http://localhost:9000/NZTripPlanner/nearbyplaces', {
                                     method: 'POST', // or 'PUT'
                                     headers: {'Content-Type': 'application/json',},
-                                    body: JSON.stringify(data),
+                                    body: JSON.stringify(data1),
                                                  })
-                                                 const result = await response.json();
-                                               //  console.log(result);
-                                                 dispatch(actions.savenearbyattractions(result));
+                                                 const result1 = await nearby_tourist_attractions.json();
+                                               //  console.log(result1);
+                                                 dispatch(actions.savenearbyattractions(result1));
+            console.log('requesting nearby lodging restrants and bar')
+            const nearby_lodgings_resturants = await fetch('http://localhost:9000/NZTripPlanner/nearbyplaces', {
+                                                    method: 'POST', // or 'PUT'
+                                                    headers: {'Content-Type': 'application/json',},
+                                                    body: JSON.stringify(data2),
+                                                                 })
+
+                                                const result2 = await nearby_lodgings_resturants.json();
+                                                 console.log(result2);
+                                                 dispatch(actions.savenearbylodgings(result2));
         } catch (error) {
             console.log('BIGG FATTT ERROOORRR! in expressActions.js fetchnearbyplaces method')
             console.log(error);

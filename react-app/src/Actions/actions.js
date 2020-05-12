@@ -4,6 +4,7 @@ export const LOADING = 'LOADING';
 export const TESTDATA = 'TESTDATA';
 export const FROMTOVALIDATION = 'FROMTOVALIDATION'
 export const SAVENEARBYATTRACTIONS = 'SAVENEARBYATTRACTIONS'
+export const SAVENEARBYLODGINGS = 'SAVENEARBYLODGINGS'
 export const SETBROWSERLOCATION = 'SETBROWSERLOCATION'
 export const ADDPLACETOMAP = 'ADDPLACETOMAP'
 export const REMOVEPLACEFROMMAP = 'REMOVEPLACEFROMMAP'
@@ -46,6 +47,15 @@ export const savenearbyattractions = (data) => {
   console.log(data)
   return {
     type: SAVENEARBYATTRACTIONS,
+    payload: data
+  }
+}
+
+export const savenearbylodgings = (data) => {
+  console.log('in action.js ==> setnearbyattraction method')
+  console.log(data)
+  return {
+    type: SAVENEARBYLODGINGS,
     payload: data
   }
 }
