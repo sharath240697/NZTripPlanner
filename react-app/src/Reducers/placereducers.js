@@ -25,8 +25,10 @@ export const initialState = {
   },
 
   tourist_places: { type: ['tourist_attraction', 'amusement_park', 'aquarium', 'art_gallery', 'church', 'hindu_temple', 'zoo', 'museum', 'place_of_worship'] }, // more plcae type should be added later
+  resturant_lodging_places: { type: ['bakery','bar','cafe','liquor_store','lodging','meal_delivery','meal_takeaway','restaurant','supermarket'] }, // more plcae type should be added later
 
   nearby_tourist_attractions: { attractions: [] },
+  nearby_lodgings: { lodgings: [] },
 
   browser_location: { accuracy: undefined, altitude: undefined, altitudeAccuracy: undefined, heading: undefined, lat: undefined, lng: undefined },
 
@@ -107,6 +109,13 @@ export default function placeReducer(state = initialState, action) {
         console.log("in SAVENEARBYATTRACTIONS case of placereducres.js")
         console.log(action.payload)
         return { ...state, nearby_tourist_attractions: { attractions: action.payload } }
+      }
+
+      case actions.SAVENEARBYLODGINGS:
+      {
+        console.log("in SAVENEARBYLODGINGS case of placereducres.js")
+        console.log(action.payload)
+        return { ...state, nearby_lodgings: { lodgings: action.payload } }
       }
 
     case actions.SETBROWSERLOCATION:
