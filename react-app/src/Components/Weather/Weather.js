@@ -2,18 +2,17 @@ import React from 'react';
 import './Weather.css';
 
 const Weather = (props) => {
-     
-  
-  
+
   return (
-      <div>
-        <h1>hello</h1>
-       
-      </div>
-    );
+    <div>
+      <p>{props.weather[0].description}</p>
+      <p>{"Temp:" + props.main.temp}</p>
+      <img url={"http://openweathermap.org/img/wn/" + props.weather[0].icon + "@2x.png"}></img>
+    </div>
+  );
 
 
-  }
+}
 
 export default Weather;
 
