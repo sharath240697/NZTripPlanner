@@ -10,6 +10,27 @@ var router = express.Router();
 
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
+//write access token and expiry date to token.json
+function createTokenJSONFile(access_token, expiry_date) {
+  // json data
+  var jsonData = '{"access_token":"' + access_token + '","scope":"https://www.googleapis.com/auth/drive.file","token_type":"Bearer","expiry_date":' + expiry_date + '}'
+  // parse json
+  var jsonObj = JSON.parse(jsonData);
+  console.log(jsonObj);
+  // stringify JSON Object
+  var jsonContent = JSON.stringify(jsonObj);
+  console.log(jsonContent);
+   
+  fs.writeFile("token.json", jsonContent, 'utf8', function (err) {
+      if (err) {
+          console.log("An error occured while writing JSON Object to File.");
+          return console.log(err);
+      }
+   
+      console.log("JSON file has been saved.");
+  });
+}
+
 const TOKEN_PATH = 'token.json';
 
 

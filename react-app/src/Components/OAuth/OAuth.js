@@ -9,8 +9,7 @@ export class OAuth extends Component {
             name: undefined,
             loggedIn: false,
             accessToken: undefined,
-            idToken: undefined,
-            googleId: undefined
+            expiryDate: undefined
         };
     }
     responseGoogle=(response)=>{
@@ -19,22 +18,18 @@ export class OAuth extends Component {
         if(response.profileObj === undefined) {
             this.setState({name: undefined})
             this.setState({accessToken: undefined})
-            this.setState({idToken: undefined})
-            this.setState({googleId: undefined})
+            this.setState({expiryDate: undefined})
             this.setState({loggedIn: false})
         } else {
             this.setState({name: response.profileObj.name})
             this.setState({accessToken: response.tokenObj.access_token})
-            this.setState({googleId: response.profileObj.googleId})
-            this.setState({idToken: response.tokenObj.id_token})
+            this.setState({expiryDate: response.tokenObj.expires_at})
             this.setState({loggedIn: true})
         }
         console.log("accessToken: " + this.state.accessToken);
         console.log("logged in: " + this.state.loggedIn);
         console.log("name: " + this.state.name);
-        console.log("idToken: " + this.state.idToken);
-        console.log("googleId: " + this.state.googleId);
-        
+        console.log("expiryDate: " + this.state.expiryDate);
     }
     render() {
         if (this.state.name === undefined) {
@@ -50,8 +45,7 @@ export class OAuth extends Component {
                     name={this.state.name}
                     loggedIn={this.state.loggedIn}
                     accessToken={this.state.accessToken}
-                    idToken={this.state.idToken}
-                    googleId={this.state.googleId}
+                    expiryDate={this.state.expiryDate}
                     />
                 </div>
             )
@@ -67,8 +61,7 @@ export class OAuth extends Component {
                     name={this.state.name}
                     loggedIn={this.state.loggedIn}
                     accessToken={this.state.accessToken}
-                    idToken={this.state.idToken}
-                    googleId={this.state.googleId}
+                    expiryDate={this.state.expiryDate}
                     scope="https://www.googleapis.com/auth/drive.file"
                     />
                 </div>
