@@ -33,7 +33,6 @@ utils.setBrowserLocation();
     return (  
       <div className="App" >
           <NavBar/>
-          <OAuth/>
           <br/>
           <br/>
           <Switch>
@@ -43,6 +42,7 @@ utils.setBrowserLocation();
                <Route  path="/plantrip" component={PlanTrip} />
                 <Route path="/savedtrip" component={SavedTrip} />
           </Switch>
+          <OAuth/>
       </div>
    );
 }

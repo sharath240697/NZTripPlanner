@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import GoogleLogin from 'react-google-login'
 import './OAuth.css';
+import { store } from '../../index'
+import { connect } from "react-redux";
+import { saveOathDetails } from '../../Actions/expressActions';
 
+const mapDispatchToProps = {
+    saveOathDetails
+  }
+
+  
 export class OAuth extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -16,6 +25,7 @@ export class OAuth extends Component {
     responseGoogle=(response)=>{
         // console.log(response);
         // console.log(response.profileObj);
+        console.log("inside responseGoogle function ")
         if(response.profileObj === undefined) {
             this.setState({name: undefined})
             this.setState({accessToken: undefined})
@@ -34,7 +44,7 @@ export class OAuth extends Component {
         console.log("name: " + this.state.name);
         console.log("idToken: " + this.state.idToken);
         console.log("googleId: " + this.state.googleId);
-        
+       // store.dispatch(saveOathDetails());
     }
     render() {
         if (this.state.name === undefined) {
@@ -42,7 +52,7 @@ export class OAuth extends Component {
                 <div>
                     <GoogleLogin
                     clientId="4273262105-e7eogru655unj4t3q20ii204dvk8u397.apps.googleusercontent.com"
-                    buttonText="Sign In"
+                    buttonText="Save trip"
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
                     cookiePolicy={'single_host_origin'}
@@ -52,6 +62,7 @@ export class OAuth extends Component {
                     accessToken={this.state.accessToken}
                     idToken={this.state.idToken}
                     googleId={this.state.googleId}
+                    onClick={this.LoginDetails}
                     />
                 </div>
             )
@@ -70,6 +81,7 @@ export class OAuth extends Component {
                     idToken={this.state.idToken}
                     googleId={this.state.googleId}
                     scope="https://www.googleapis.com/auth/drive.file"
+                    onClick={this.LoginDetails}
                     />
                 </div>
             )
@@ -78,3 +90,4 @@ export class OAuth extends Component {
     }
 }
 export default OAuth
+//export default connect(mapDispatchToProps)(OAuth);

@@ -13,7 +13,13 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 const TOKEN_PATH = 'token.json';
 
 
-fs.readFile('credentials.json', (err, content) => {
+router.post('/saveoathdetails', async function(req, res, ){
+console.log('inside uploadToDrive.js saveoathdetails  API method')
+
+})
+
+
+fs.readFile('./routes/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   //authorize(JSON.parse(content),checkIfFilesExists);
  authorize(JSON.parse(content), storeFiles);
@@ -75,7 +81,7 @@ function authorize(credentials, callback) {
     var media = {
             mimeType: 'application/json',
             //PATH OF THE FILE FROM YOUR COMPUTER
-            body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/ImageUploadToDrive/credentials.json')
+            body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/test.json')
     };
     drive.files.create({
         resource: fileMetadata,
