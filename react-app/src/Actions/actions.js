@@ -8,6 +8,7 @@ export const SAVENEARBYLODGINGS = 'SAVENEARBYLODGINGS'
 export const SETBROWSERLOCATION = 'SETBROWSERLOCATION'
 export const ADDPLACETOMAP = 'ADDPLACETOMAP'
 export const REMOVEPLACEFROMMAP = 'REMOVEPLACEFROMMAP'
+export const SAVEOAUTHDATA = 'SAVEOAUTHDATA'
 
 export const updateFromPlace = from => ({
   type: CHANGE_FROM_PLACE,
@@ -82,5 +83,13 @@ export const removeplacefrommap = (place) => {
   return {
     type: REMOVEPLACEFROMMAP,
     payload: place
+  }
+}
+
+export const saveOAuthData = (data) => {
+  console.log('save oauth action')
+  return {
+    type: SAVEOAUTHDATA,
+    payload: data
   }
 }
