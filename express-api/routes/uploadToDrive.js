@@ -1,34 +1,31 @@
-const fs = require('fs');
+//not being used now, might need later
+
+/*const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 var express = require('express');
 var router = express.Router();
+const bodyParser = require('body-parser');
+const fetch = require('node-fetch');
 
-//const SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
-//'https://www.googleapis.com/auth/drive.metadata.readonly'];
 
-
-const SCOPES = ['https://www.googleapis.com/auth/drive'];
+const SCOPES =['https://www.googleapis.com/auth/drive.file'];
 
 const TOKEN_PATH = 'token.json';
 
-
-router.post('/saveoathdetails', async function(req, res, ){
-console.log('inside uploadToDrive.js saveoathdetails  API method')
-
-})
+module.exports = router; 
 
 
 fs.readFile('./routes/credentials.json', (err, content) => {
   if (err) return console.log('Error loading client secret file:', err);
   //authorize(JSON.parse(content),checkIfFilesExists);
- authorize(JSON.parse(content), storeFiles);
- authorize(JSON.parse(content),  downloadFile );
+ storeFiles();
+ //authorize(JSON.parse(content),  downloadFile );
 });
 
 
 
-function authorize(credentials, callback) {
+/*function authorize(credentials, callback) {
    
     const {client_secret, client_id, redirect_uris} = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
@@ -43,10 +40,10 @@ function authorize(credentials, callback) {
       oAuth2Client.setCredentials(JSON.parse(token));
       callback(oAuth2Client);
     });
-  }
+  }*/
   
 
-
+/*
   function getAccessToken(oAuth2Client, callback) {
     const authUrl = oAuth2Client.generateAuthUrl({
       access_type: 'offline',
@@ -71,8 +68,32 @@ function authorize(credentials, callback) {
     });
   }
 
+*/
 
-  function storeFiles(auth) {
+
+//write access token and expiry date to token.json
+function createTokenJSONFile(access_token, expiry_date) {
+  // json data
+  var jsonData = '{"access_token":"' + access_token + '","scope":"https://www.googleapis.com/auth/drive.file","token_type":"Bearer","expiry_date":' + expiry_date + '}'
+  // parse json
+  var jsonObj = JSON.parse(jsonData);
+  console.log(jsonObj);
+  // stringify JSON Object
+  var jsonContent = JSON.stringify(jsonObj);
+  console.log(jsonContent);
+
+  fs.writeFile("token.json", jsonContent, 'utf8', function (err) {
+      if (err) {
+          console.log("An error occured while writing JSON Object to File.");
+          return console.log(err);
+      }
+
+      console.log("JSON file has been saved.");
+  });
+}
+
+const TOKEN_PATH = 'token.json';
+/*  function storeFiles(auth) {
       console.log("auth", JSON.stringify(auth));
     const drive = google.drive({version: 'v3', auth});
     var fileMetadata = {
@@ -81,7 +102,7 @@ function authorize(credentials, callback) {
     var media = {
             mimeType: 'application/json',
             //PATH OF THE FILE FROM YOUR COMPUTER
-            body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/test.json')
+            body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/credentials.json')
     };
     drive.files.create({
         resource: fileMetadata,
@@ -116,5 +137,4 @@ function authorize(credentials, callback) {
      .pipe(dest);
   });
    }
-
-   module.exports = router;
+*/

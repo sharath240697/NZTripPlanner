@@ -9,6 +9,7 @@ const mapDispatchToProps = {
     saveOathDetails
   }
 
+   
   
 export class OAuth extends Component {
     
@@ -17,34 +18,40 @@ export class OAuth extends Component {
         this.state = {
             name: undefined,
             loggedIn: false,
-            accessToken: undefined,
-            idToken: undefined,
-            googleId: undefined
+            access_token: undefined,
+               expiryDate: undefined
         };
     }
     responseGoogle=(response)=>{
-        // console.log(response);
-        // console.log(response.profileObj);
+         console.log(response);
+         console.log(response.profileObj);
         console.log("inside responseGoogle function ")
         if(response.profileObj === undefined) {
             this.setState({name: undefined})
-            this.setState({accessToken: undefined})
-            this.setState({idToken: undefined})
+            this.setState({access_token: undefined})
+            this.setState({expiryDate: undefined})
             this.setState({googleId: undefined})
+            this.setState({idToken: undefined})
             this.setState({loggedIn: false})
         } else {
             this.setState({name: response.profileObj.name})
-            this.setState({accessToken: response.tokenObj.access_token})
-            this.setState({googleId: response.profileObj.googleId})
-            this.setState({idToken: response.tokenObj.id_token})
+            this.setState({access_token: response.tokenObj.access_token})
+             this.setState({expiryDate: response.tokenObj.expires_at})
+             this.setState({googleId: response.profileObj.googleId})
+             this.setState({idToken: response.tokenObj.id_token})
             this.setState({loggedIn: true})
+           // saveOathDetails(this.state.accessToken,this.state.loggedIn,this.state.idToken);
         }
-        console.log("accessToken: " + this.state.accessToken);
+        console.log("access_token: " + this.state.access_token);
         console.log("logged in: " + this.state.loggedIn);
         console.log("name: " + this.state.name);
-        console.log("idToken: " + this.state.idToken);
+       console.log("expiryDate: " + this.state.expiryDate);
         console.log("googleId: " + this.state.googleId);
-       // store.dispatch(saveOathDetails());
+        console.log("idToken: " + this.state.idToken);
+       store.dispatch(saveOathDetails({        
+        access_token:response.tokenObj.access_token,
+        expires_at:response.tokenObj.expires_at  
+    }));      
     }
     render() {
         if (this.state.name === undefined) {
@@ -52,16 +59,15 @@ export class OAuth extends Component {
                 <div>
                     <GoogleLogin
                     clientId="4273262105-e7eogru655unj4t3q20ii204dvk8u397.apps.googleusercontent.com"
-                    buttonText="Save trip"
+                    buttonText="Login"
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
                     cookiePolicy={'single_host_origin'}
                     scope="https://www.googleapis.com/auth/drive.file"
                     name={this.state.name}
                     loggedIn={this.state.loggedIn}
-                    accessToken={this.state.accessToken}
-                    idToken={this.state.idToken}
-                    googleId={this.state.googleId}
+                    access_token={this.state.access_token}
+                     expiryDate={this.state.expiryDate}
                     onClick={this.LoginDetails}
                     />
                 </div>
@@ -71,13 +77,13 @@ export class OAuth extends Component {
                 <div>
                     <GoogleLogin
                     clientId="4273262105-e7eogru655unj4t3q20ii204dvk8u397.apps.googleusercontent.com"
-                    buttonText={"Signed In As " + this.state.name}
+                    buttonText={"Login " + this.state.name}
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
                     cookiePolicy={'single_host_origin'}
                     name={this.state.name}
                     loggedIn={this.state.loggedIn}
-                    accessToken={this.state.accessToken}
+                    access_token={this.state.access_token}
                     idToken={this.state.idToken}
                     googleId={this.state.googleId}
                     scope="https://www.googleapis.com/auth/drive.file"
@@ -91,3 +97,6 @@ export class OAuth extends Component {
 }
 export default OAuth
 //export default connect(mapDispatchToProps)(OAuth);
+
+
+//export default connect()(OAuth);

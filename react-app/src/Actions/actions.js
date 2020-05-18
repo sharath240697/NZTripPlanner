@@ -84,3 +84,12 @@ export const removeplacefrommap = (place) => {
     payload: place
   }
 }
+
+
+export const saveOathDetails = (place) => {
+  console.log('called saveOathDetails actions')
+  return {
+    type: REMOVEPLACEFROMMAP,
+    payload: place
+  }
+}

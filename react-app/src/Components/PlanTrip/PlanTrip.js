@@ -11,7 +11,7 @@ import { store } from '../../index'
 import MapComponent from '../MapComponent/MapComponent'
 import MapComponentDefault from '../MapComponent/MapComponentDefault'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
-import { saveOathDetails } from '../../Actions/expressActions';
+
 
 
 const mapStateToProps = state => (
@@ -33,7 +33,7 @@ const mapStateToProps = state => (
   })
 
 const mapDispatchToProps = {
-  setfromtovalidation, fetchnearbyplaces, fetchweatherdata,saveOathDetails
+  setfromtovalidation, fetchnearbyplaces, fetchweatherdata
 }
 
 
@@ -58,8 +58,7 @@ const PlanTrip = (props) => {
       if ((props.from_lat || props.from_lng) === undefined) { data.from = false; }
       if ((props.to_lat || props.to_lng) === undefined) { data.to = false; }
       store.dispatch(setfromtovalidation(data)); 
-      store.dispatch(saveOathDetails(data));
-        // redux dispatch
+             // redux dispatch
      
     }
   }

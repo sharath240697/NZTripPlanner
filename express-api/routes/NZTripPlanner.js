@@ -1,8 +1,16 @@
+
+
+
 const  Places = require("google-places-web").default;
+//const  uploadToDrive =require('./uploadToDrive')
 var express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 var router = express.Router();
+const {google} = require('googleapis');
+const fs = require('fs');
+const readline = require('readline');
+
 
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
 
@@ -13,9 +21,7 @@ router.get('/', function(req, res) {
 module.exports = router; 
 
 
-router.post('/nearbyplaces', async function(req, res, ){
-
-  
+router.post('/nearbyplaces', async function(req, res, ){  
     try {
 
         console.log(req.body);
@@ -53,4 +59,108 @@ router.post('/nearbyplaces', async function(req, res, ){
       } catch (error) {
         console.log(error);
       }
+
+    })
+   
+
+    //saves the trip and oath details
+router.post('/saveOathDetails', async function(req, res, ){
+  try{
+  console.log('inside uploadToDrive.js saveoathdetails  API method')
+
+const auth=
+  {  
+"_events":{},
+"_eventsCount":0,
+"transporter":{},
+"credentials":{"access_token":req.body.access_token,
+"scope":"https://www.googleapis.com/auth/drive",
+"token_type":"Bearer",
+"expiry_date": req.body.expires_at},
+"certificateCache":null,
+"certificateExpiry":null,
+"refreshTokenPromises":{},
+"_clientId":"820264989222-v06oobtj8drmgfcgn3hoklu2amna5crc.apps.googleusercontent.com",
+"_clientSecret":"RxK3BLqs17Fgtdz_HleK3RKW",
+"redirectUri":"http://localhost:9000",
+"eagerRefreshThresholdMillis":300000
+  }
+
+//to create a token file , which is uer specific
+
+fs.readFile('./routes/credentials.json', (err, content) => {
+  if (err) return console.log('Error loading client secret file:', err);
+  authorize(JSON.parse(content),  storeFiles );
+ // authorize(JSON.parse(content),  downloadFile );  
+});
+ 
+//authorising the access of the user using the token
+function authorize(credentials, callback) {
+  //assigning  the application related data
+  const {client_secret, client_id, redirect_uris} = credentials.installed;
+  const oAuth2Client = new google.auth.OAuth2(
+      client_id, client_secret, redirect_uris[0]);
+
+      //assigning user specific data
+      var jsonData = '{"access_token":"' + auth.credentials.access_token + '","scope":"https://www.googleapis.com/auth/drive","token_type":"Bearer","expiry_date":' + auth.credentials.expiry_date + '}' 
+      // parse json
+      var jsonObj = JSON.parse(jsonData);      
+      // stringify JSON Object
+      var jsonContent = JSON.stringify(jsonObj);
+           oAuth2Client.setCredentials(JSON.parse(jsonContent));
+           //call the call back function being passed storefiles/downloadfile
+    callback(oAuth2Client);  
+}
+
+
+//to upload the trip details , for now dummy data is being
+function storeFiles(auth) {
+console.log("inside store files" );
+const drive = google.drive({version: 'v3', auth});
+var fileMetadata = {
+      'name': 'TripDetails.json'
+};
+var media = {
+      mimeType: 'application/json',
+      //Change to project file path
+      body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/TripDetails.json')
+};
+drive.files.create({
+  resource: fileMetadata,
+  media: media,
+  fields: 'id'
+}, function (err, file) {
+if (err) {
+  console.log('inside error  save files');
+  console.error(err);
+} else {
+  console.log('File Id: ', file.data.id);
+}
+});
+}
+}catch (error) {
+  console.log(error);
+}
 })
+
+
+//to download the json file from drive, not completely implemented as not sure when to call
+function downloadFile(auth)
+{
+ const drive = google.drive({version: 'v3', auth});
+ //fileId keeps changing
+var fileId = '1VY8NqDhaEpmkEN5hQO45vobKkEFrp-oY'
+var dest = fs.createWriteStream('./DownLoadedTripDetails.json');
+drive.files.get({fileId: fileId, alt: 'media'}, {responseType: 'stream'},
+function(err, res){
+  res.data
+  .on('end', () => {
+     console.log('Done');
+  })
+  .on('error', err => {
+     console.log('Error', err);
+  })
+  .pipe(dest);
+});
+}
+
