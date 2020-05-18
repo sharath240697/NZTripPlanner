@@ -8,6 +8,7 @@ export const SAVENEARBYLODGINGS = 'SAVENEARBYLODGINGS'
 export const SETBROWSERLOCATION = 'SETBROWSERLOCATION'
 export const ADDPLACETOMAP = 'ADDPLACETOMAP'
 export const REMOVEPLACEFROMMAP = 'REMOVEPLACEFROMMAP'
+export const STOREWEATHER = 'STOREWEATHER'
 
 export const updateFromPlace = from => ({
   type: CHANGE_FROM_PLACE,
@@ -93,3 +94,11 @@ export const saveOathDetails = (place) => {
     payload: place
   }
 }
+
+export const storeweatherdata = (data) => {
+  return {
+    type: STOREWEATHER,
+    payload: data
+  }
+}
+

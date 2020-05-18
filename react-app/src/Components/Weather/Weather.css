@@ -3,5 +3,21 @@
 */
 
 .Weather {
-    /* propertys here */
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+    border-radius: 5px;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(196, 196, 196);
+    margin: 10px 0;
+}
+
+img {
+    height: 50px;
+    width: auto;
+}
+
+p {
+    margin-bottom: 0px;
 }

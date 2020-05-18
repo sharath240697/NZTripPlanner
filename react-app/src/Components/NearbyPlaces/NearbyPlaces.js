@@ -5,6 +5,7 @@ import { Card, CardMedia, CardContent, CardActions, Button, Switch } from "@mate
 import { Add, Remove } from '@material-ui/icons';
 import { addplacetomap, removeplacefrommap } from '../../Actions/actions';
 import { store } from '../../index'
+import Weather from '../Weather/Weather';
 
 
 const mapStateToProps = (state) => ({
@@ -48,6 +49,7 @@ const NearbyPlaces = (props) => {
         />
         <p style={state.showToggle ? { borderBottom: 'black solid 1px' } : {}}>Restaurants</p>
       </div>
+      <Weather />
       {
         toMap.map((attraction) => {
           return (
