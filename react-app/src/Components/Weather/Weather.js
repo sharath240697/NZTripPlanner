@@ -1,20 +1,25 @@
 import React from 'react';
 import './Weather.css';
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => ({
+  weatherData: state.weather.openWeatherData
+})
 
 const Weather = (props) => {
 
   return (
-    <div>
-      <p>{props.weather[0].description}</p>
-      <p>{"Temp:" + props.main.temp}</p>
-      <img url={"http://openweathermap.org/img/wn/" + props.weather[0].icon + "@2x.png"}></img>
-    </div>
+    props.weatherData.weather ?
+      <div className="Weather">
+        <img src={"http://openweathermap.org/img/wn/" + props.weatherData.weather[0].icon + "@2x.png"}></img>
+        <p>{props.weatherData.main.temp}&#8451;</p>
+      </div> : <div></div>
   );
 
 
 }
 
-export default Weather;
+export default connect(mapStateToProps)(Weather);
 
 
 
