@@ -9,7 +9,7 @@ import { fetchnearbyplaces } from '../../Actions/expressActions';
 import { fetchweatherdata } from '../../Actions/expressActions';
 import { store } from '../../index'
 import MapComponent from '../MapComponent/MapComponent'
-import MapComponentDefault from '../MapComponent/MapComponentDefault'
+import MapComponent_Destination_nearbyplace from '../MapComponent/MapComponent_Destination_nearbyplaces'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
 
 const mapStateToProps = state => (
@@ -57,8 +57,16 @@ const PlanTrip = (props) => {
       store.dispatch(setfromtovalidation(data));    // redux dispatch
     }
   }
-
+  
   const waypoints =  props.placesOnMap.map(place => place.place_id)
+  const waypoints_len = waypoints.length
+  const nearby_place_origin = props.to_placeId;
+  const nearby_place_destination = waypoints[waypoints.length-1]
+  const nearby_place_waypoints = waypoints.filter(waypoint => 
+    waypoint!==nearby_place_destination
+  ) 
+  console.log('nearby_place_waypoints '+nearby_place_waypoints)
+  console.log('nearby_place_destination '+nearby_place_waypoints)
   return (
     <div>
       {(!props.from_validation || !props.to_validation) && <h2>Please select your Start location and destination</h2>}<br /><br />
@@ -70,8 +78,10 @@ const PlanTrip = (props) => {
       <br /><br />
       <br /><br />
       <div className="MapandPlacesContainer">
-        {props.from_validation && props.to_validation && <MapComponent origin={props.from_placeId} destination={props.to_placeId} browser={{ lat: props.browser_lat, lng: props.browser_lng }} waypoints = {waypoints} ></MapComponent>}
-        {(!props.from_validation || !props.to_validation) && <MapComponentDefault browser={{ lat: props.browser_lat, lng: props.browser_lng }}></MapComponentDefault>}
+        <MapComponent origin={props.from_placeId} destination={props.to_placeId} browser={{ lat: props.browser_lat, lng: props.browser_lng } } ></MapComponent>
+        {waypoints.length>0 && <MapComponent_Destination_nearbyplace 
+        origin={nearby_place_origin} destination={nearby_place_destination} browser={{ lat: props.browser_lat, lng: props.browser_lng }} waypoints = {nearby_place_waypoints}>
+          </MapComponent_Destination_nearbyplace>}
 
         <NearbyPlaces func={navigate()}/>
       </div>

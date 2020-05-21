@@ -15,7 +15,6 @@ class MapComponent extends React.Component {
       withProps({
         origin: this.props.origin,
         destination: this.props.destination,
-        waypoints: this.props.waypoints,
         browser: this.props.browser,
         googleMapURL:
           "https://maps.googleapis.com/maps/api/js?key=AIzaSyBjwnK_zvDGQokuzDJ0NVnR979L_KNEYuo&libraries=geometry,drawing,places",
@@ -34,10 +33,6 @@ class MapComponent extends React.Component {
             origin: {placeId: this.props.origin},
             destination: {placeId: this.props.destination},
             //{placeId: "ChIJ--acWvtHDW0RF5miQ2HvAAU"} this.props.origin.lat, this.props.origin.lng
-            waypoints:  this.props.waypoints.map(place_id => {
-                return {stopover: true,
-                  location: {'placeId': place_id}}
-            }),
             travelMode: google.maps.TravelMode.DRIVING
 
 
