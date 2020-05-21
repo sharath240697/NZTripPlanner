@@ -86,9 +86,19 @@ export const removeplacefrommap = (place) => {
   }
 }
 
+
+export const saveOathDetails = (place) => {
+  console.log('called saveOathDetails actions')
+  return {
+    type: REMOVEPLACEFROMMAP,
+    payload: place
+  }
+}
+
 export const storeweatherdata = (data) => {
   return {
     type: STOREWEATHER,
     payload: data
   }
 }
+

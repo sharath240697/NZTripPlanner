@@ -12,6 +12,8 @@ import MapComponent from '../MapComponent/MapComponent'
 import MapComponentDefault from '../MapComponent/MapComponentDefault'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
 
+
+
 const mapStateToProps = state => (
 
   {
@@ -31,7 +33,7 @@ const mapStateToProps = state => (
   })
 
 const mapDispatchToProps = {
-  setfromtovalidation, fetchnearbyplaces, fetchweatherdata,
+  setfromtovalidation, fetchnearbyplaces, fetchweatherdata
 }
 
 
@@ -48,15 +50,20 @@ const PlanTrip = (props) => {
       props.fetchnearbyplaces({ lat: props.to_lat, lng: props.to_lng, places_type: props.place_type,resturant_type: props.lodging_resturant_types })  // redux thunks dispatch
       console.log("in Plantrip component navigate function if block after thunk dispatch")
       props.fetchweatherdata({ lat: props.to_lat, lng: props.to_lng });
+          
     }
     else {
       console.log('props.from_lat ' + props.from_lat)
       const data = { from: true, to: true }
       if ((props.from_lat || props.from_lng) === undefined) { data.from = false; }
       if ((props.to_lat || props.to_lng) === undefined) { data.to = false; }
-      store.dispatch(setfromtovalidation(data));    // redux dispatch
+      store.dispatch(setfromtovalidation(data)); 
+             // redux dispatch
+     
     }
   }
+
+
 
   const waypoints =  props.placesOnMap.map(place => place.place_id)
   return (
