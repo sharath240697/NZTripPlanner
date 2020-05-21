@@ -48,10 +48,17 @@ export class OAuth extends Component {
        console.log("expiryDate: " + this.state.expiryDate);
         console.log("googleId: " + this.state.googleId);
         console.log("idToken: " + this.state.idToken);
-       store.dispatch(saveOathDetails({        
-        access_token:response.tokenObj.access_token,
-        expires_at:response.tokenObj.expires_at  
-    }));      
+        if(this.state.loggedIn === true) {
+            store.dispatch(saveOathDetails({        
+                access_token:response.tokenObj.access_token,
+                expires_at:response.tokenObj.expires_at  
+            }));
+        } else {
+            store.dispatch(saveOathDetails({        
+                access_token:undefined,
+                expires_at:undefined 
+            }));
+        }     
     }
     render() {
         if (this.state.name === undefined) {
