@@ -85,11 +85,11 @@ function getAuthDetails() {
     "transporter": {},
     //"credentials":{"access_token":req.body.access_token,
     "credentials": {
-      "access_token": "ya29.a0AfH6SMAqRHu0JCRi1ZxMSd6cKnN3PyAozm4pfaPjzvXYyjLro3m_jyWZFMZ4X4ls0RSEERKF6dULec5sJm0fME4y4-BZFR9_59jo4hVEOTwCqZ5LYr563uelAf2JlbNM77fFvBXnyYIRlPGNiacRx22kL1ZNtTPLbzMi",
-      "scope": "https://www.googleapis.com/drive/v3/files",
+    "access_token": "ya29.a0AfH6SMAVORRbvrWQcKeFozNV6GPhpOriHRItV__FsC9ajnPjdSUCuSDRGS5_hbkqJBMAVOJ4X14vjnh-OW7VXJNhTKSeU4Qb6_UESzLWAV6ruf5-G7iNBNq96g39xXP2zldIzolenqFBrflew5gSduFeNItZ-bjBgek_",
+     "scope": "https://www.googleapis.com/auth/drive",
       "token_type": "Bearer",
       //"expiry_date": req.body.expires_at},
-      "expiry_date": "1589905874808"
+      "expiry_date": "1590131771281"
     },
     "certificateCache": null,
     "certificateExpiry": null,
@@ -110,7 +110,7 @@ function authorize(credentials, callback) {
     client_id, client_secret, redirect_uris[0]);
   const auth = getAuthDetails();
   //assigning user specific data
-  var jsonData = '{"access_token":"' + auth.credentials.access_token + '","scope":"https://www.googleapis.com/auth/drive.file","token_type":"Bearer","expiry_date":' + auth.credentials.expiry_date + '}'
+  var jsonData = '{"access_token":"' + auth.credentials.access_token + '","scope":"https://www.googleapis.com/auth/drive","token_type":"Bearer","expiry_date":' + auth.credentials.expiry_date + '}'
   // parse json
   var jsonObj = JSON.parse(jsonData);
   // stringify JSON Object
@@ -155,7 +155,7 @@ function CheckFileExists(auth) {
         });
       } else {
         //update the contets of the file
-        const fileMetadata = {
+             const fileMetadata = {
           'name': 'NZTripPlanDetails.json',
           };
         var media = {
@@ -193,11 +193,24 @@ function storeFiles(auth) {
     'name': 'NZTripPlanDetails.json',
     parents: ['1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC']//folder name in the drive, will change
   };
+  //save trip related details here
+  var jsonData = 
+    [{
+      "id": 28,
+      "Title": "Sweden"
+    }, {
+      "id": 56,
+      "Title": "USA"
+    }, {
+      "id": 89,
+      "Title": "England"
+    }]
+  var jsonContent = JSON.stringify(jsonData);
+  console.log('jsonContent is'+jsonContent);
 
   var media = {
     mimeType: 'application/json',
-    //Change to project file path
-    body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/NZTripPlanDetails.json')
+      body: jsonContent  
   };
   drive.files.create({
     resource: fileMetadata,
@@ -215,75 +228,6 @@ function storeFiles(auth) {
 
 
 /* end of save trip details */
-
-/* start of download details */
-
-router.post('/downloadTripDetails', async function (req, res, ) {
-  try {
-    console.log('inside uploadToDrive.js downloadTripDetails  API method')
-    fs.readFile('./routes/credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      authorize(JSON.parse(content), downloadTripDetails);
-    });
-  }
-  catch (error) {
-    console.log(error);
-  }
-})
-
-function downloadTripDetails(auth) {
-
-  console.log('CheckFileExists')
-  const drive = google.drive({ version: 'v3', auth });
-  folderId = '1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC',
-    // Check File exists
-    drive.files.list({
-      //auth: auth,
-      trashed: false,
-      q: `'${folderId}' in parents and trashed:false`,//to exclude the trash files
-
-    }, function (err, response) {
-      if (err) {
-        console.log('The API returned an error: ' + err);
-        return;
-      }
-      var files = response.data.files;
-      console.log("Files: " + files);
-      if (files.length == 0) {
-        console.log('No files found.');
-      } else {
-        console.log('Files:');
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          console.log('%s (%s)', file.name, file.id);
-        }
-      }
-      console.log('files length is ' + files.length)
-
-      const drive = google.drive({ version: 'v3', auth });
-      var dest = fs.createWriteStream('./DownLoaded.json');
-      drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' },
-        function (err, res) {
-          res.data
-            .on('end', () => {
-              console.log('Done');
-            })
-            .on('error', err => {
-              console.log('Error', err);
-            })
-            .pipe(dest);
-        });
-    });
-}
-
-/* end of download trip details */
-
-
-
-
-
-
-
 
 
   
