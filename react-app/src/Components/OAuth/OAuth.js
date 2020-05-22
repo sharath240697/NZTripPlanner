@@ -3,10 +3,10 @@ import GoogleLogin from 'react-google-login'
 import './OAuth.css';
 import { store } from '../../index'
 import { connect } from "react-redux";
-import { saveOAuthData } from '../../Actions/actions';
+import { saveOathDetails } from '../../Actions/actions';
 
 const mapDispatchToProps = {
-    saveOAuthData
+    saveOathDetails
 }
 
 const mapStateToProps = (state) => ({
@@ -19,6 +19,7 @@ export function OAuth (props) {
     const [accessToken, setAccessToken] = useState(undefined);
     const [loggedIn, setLoggedIn] = useState(false);
     const [LoginDetails, setLoginDetails] = useState(undefined);
+    const [expiry, setExpiry] = useState(undefined);
     
 
     const responseGoogle = (response) => {
@@ -26,16 +27,29 @@ export function OAuth (props) {
         if (response.profileObj === undefined) {
             setName(undefined)
             setAccessToken(undefined)
+            setExpiry(undefined)
             setLoggedIn(false )
         } else {
             setName(response.profileObj.name)
             setAccessToken(response.tokenObj.access_token)
+            setExpiry(response.tokenObj.expires_at)
             setLoggedIn(true)
         }
         console.log("accessToken: " + accessToken);
         console.log("logged in: " + loggedIn);
         console.log("name: " + name);
-        store.dispatch(saveOAuthData(response));
+        console.log("expiry: " + expiry);
+        if(loggedIn) {
+            store.dispatch(saveOathDetails({        
+                access_token:response.tokenObj.access_token,
+                expires_at:response.tokenObj.expires_at  
+            }));
+        } else {
+            store.dispatch(saveOathDetails({        
+                access_token:undefined,
+                expires_at:undefined 
+            }));
+        }     
     }
         if (name === undefined) {
             return (
