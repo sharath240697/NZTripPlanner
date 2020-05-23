@@ -2,7 +2,11 @@ import * as actions from '../Actions/actions'
 
 export const initialState = {
     Credentials: {
-
+        name: undefined,
+        accessToken: undefined,
+        loggedIn: false,
+        LoginDetails: undefined,
+        expiry: undefined
     }
 }
 

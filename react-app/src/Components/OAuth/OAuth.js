@@ -5,51 +5,50 @@ import { store } from '../../index'
 import { connect } from "react-redux";
 import { saveOathDetails } from '../../Actions/actions';
 
+
+
 const mapDispatchToProps = {
     saveOathDetails
 }
 
 const mapStateToProps = (state) => ({
-    credentials: state.oauth.Credentials
+    name: state.oauth.Credentials.name,
+    accessToken: state.oauth.Credentials.accessToken,
+    loggedIn: state.oauth.Credentials.loggedIn,
+    LoginDetails: state.oauth.Credentials.LoginDetails,
+    expiry: state.oauth.Credentials.expiry
 });
 
 export function OAuth (props) {
 
-    const [name, setName] = useState(undefined);
-    const [accessToken, setAccessToken] = useState(undefined);
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [LoginDetails, setLoginDetails] = useState(undefined);
-    const [expiry, setExpiry] = useState(undefined);
-    
+    const [name, setName] = useState(props.name);
 
     const responseGoogle = (response) => {
+        console.log(response)
         console.log("inside responseGoogle function ")
         if (response.profileObj === undefined) {
             setName(undefined)
-            setAccessToken(undefined)
-            setExpiry(undefined)
-            setLoggedIn(false )
+            store.dispatch(saveOathDetails({
+                Credentials: {
+                    name: undefined,
+                    accessToken: undefined,
+                    loggedIn: false,
+                    LoginDetails: undefined,
+                    expiry: undefined
+                } 
+            }))
         } else {
             setName(response.profileObj.name)
-            setAccessToken(response.tokenObj.access_token)
-            setExpiry(response.tokenObj.expires_at)
-            setLoggedIn(true)
-        }
-        console.log("accessToken: " + accessToken);
-        console.log("logged in: " + loggedIn);
-        console.log("name: " + name);
-        console.log("expiry: " + expiry);
-        if(loggedIn) {
-            store.dispatch(saveOathDetails({        
-                access_token:response.tokenObj.access_token,
-                expires_at:response.tokenObj.expires_at  
-            }));
-        } else {
-            store.dispatch(saveOathDetails({        
-                access_token:undefined,
-                expires_at:undefined 
-            }));
-        }     
+            store.dispatch(saveOathDetails({
+                Credentials: {
+                    name: response.profileObj.name,
+                    accessToken: response.tokenObj.access_token,
+                    loggedIn: true,
+                    LoginDetails: undefined,
+                    expiry: response.tokenObj.expires_at
+                }
+            }))
+        }   
     }
         if (name === undefined) {
             return (
@@ -61,10 +60,10 @@ export function OAuth (props) {
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
                         scope="https://www.googleapis.com/auth/drive.file"
-                        name={name}
-                        loggedIn={loggedIn}
-                        accessToken={accessToken}
-                        onClick={LoginDetails}
+                        name={props.name}
+                        loggedIn={props.loggedIn}
+                        accessToken={props.accessToken}
+                        onClick={props.LoginDetails}
                     />
                 </div>
             )
@@ -77,11 +76,11 @@ export function OAuth (props) {
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
-                        name={name}
-                        loggedIn={loggedIn}
-                        accessToken={accessToken}
+                        name={props.name}
+                        loggedIn={props.loggedIn}
+                        accessToken={props.accessToken}
                         scope="https://www.googleapis.com/auth/drive.file"
-                        onClick={LoginDetails}
+                        onClick={props.LoginDetails}
                     />
                 </div>
             )
