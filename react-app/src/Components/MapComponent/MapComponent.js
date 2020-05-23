@@ -20,7 +20,7 @@ class MapComponent extends React.Component {
         googleMapURL:
           "https://maps.googleapis.com/maps/api/js?key=AIzaSyBjwnK_zvDGQokuzDJ0NVnR979L_KNEYuo&libraries=geometry,drawing,places",
         loadingElement: <div style={{ height: `50%` }} />,
-        containerElement: <div className="MapComponent" style={{ height: `600px` }} />,
+        containerElement: <div className="MapComponent" style={{ width: `600px`, height: `600px` }} />,
         mapElement: <div style={{ height: `100%` }} />,
       }),
       withScriptjs,
@@ -31,12 +31,14 @@ class MapComponent extends React.Component {
           console.log(this.props.waypoints)
           const DirectionsService = new google.maps.DirectionsService();
           DirectionsService.route({
-            origin: {placeId: this.props.origin},
-            destination: {placeId: this.props.destination},
+            origin: { placeId: this.props.origin },
+            destination: { placeId: this.props.destination },
             //{placeId: "ChIJ--acWvtHDW0RF5miQ2HvAAU"} this.props.origin.lat, this.props.origin.lng
-            waypoints:  this.props.waypoints.map(place_id => {
-                return {stopover: true,
-                  location: {'placeId': place_id}}
+            waypoints: this.props.waypoints.map(place_id => {
+              return {
+                stopover: true,
+                location: { 'placeId': place_id }
+              }
             }),
             travelMode: google.maps.TravelMode.DRIVING
 

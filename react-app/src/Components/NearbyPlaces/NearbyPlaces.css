@@ -4,13 +4,11 @@
 
 .NearbyPlaces {
   max-height: 600px;
-  overflow-y: scroll;
-  width: 45%;
-  padding-right: 20px;
+  overflow-y: auto;
+  width: 47%;
 }
 
 .PlaceCard {
-  /* propertys here */
   max-width: 500px;
   display: flex;
   flex-direction: row;
@@ -51,8 +49,10 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  padding-bottom: 10px;
 }
 
 .ToggleBox p {
   padding: 5px;
+  border: white 1px solid;
 }

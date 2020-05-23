@@ -10,10 +10,10 @@ const Weather = (props) => {
 
   return (
     props.weatherData.weather ?
-      <div className="Weather">
+      <div className="WeatherBox Weather">
         <img src={"http://openweathermap.org/img/wn/" + props.weatherData.weather[0].icon + "@2x.png"}></img>
         <p>{props.weatherData.main.temp}&#8451;</p>
-      </div> : <div></div>
+      </div> : <div className="WeatherBox"></div>
   );
 
 
