@@ -6,7 +6,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/NavBar/NavigationBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
-import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
 import OAuth from './Components/OAuth/OAuth';
 
@@ -33,7 +32,6 @@ utils.setBrowserLocation();
     return (  
       <div className="App" >
           <NavBar/>
-          <OAuth/>
           <br/>
           <br/>
           <Switch>
@@ -43,6 +41,7 @@ utils.setBrowserLocation();
                <Route  path="/plantrip" component={PlanTrip} />
                 <Route path="/savedtrip" component={SavedTrip} />
           </Switch>
+          <OAuth/>
       </div>
    );
 }

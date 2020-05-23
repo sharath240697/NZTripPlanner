@@ -1,3 +1,17 @@
+dependencies :
+npm install googleapis@39 --save
+
+
+folder name in the drive, will change 
+
+
+file path will change-- project specific
+
+
+only update as the  drive gives method to update only, not append
+
+
+different scope used  for upload, download and check files = https://www.googleapis.com/drive/v3/files
 # README
 ## Group-23-Azure-Ant's RoadTrip Planner Web Application
 This project leverages the power of many APIs to display helpful information when planning a road trip. The app allows the user to navigate between locations, view, add and remove nearby places or restaurants, as well as viewing relevant weather information. The user can save and load their trips.
@@ -22,3 +36,4 @@ The project generally uses standard code style. Use of camel case fields and var
 Please view various technology and APIs used [here](https://github.com/jake-good/Group-23-Azure-Ant/wiki/APIs-and-Dependencies).
 ### License
 Please view the license for reuse of this project [here](https://github.com/jake-good/Group-23-Azure-Ant/wiki/License).
+

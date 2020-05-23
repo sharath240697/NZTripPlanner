@@ -1,8 +1,13 @@
 const  Places = require("google-places-web").default;
+//const  uploadToDrive =require('./uploadToDrive')
 var express = require('express');
 const bodyParser = require('body-parser');
 const fetch = require('node-fetch');
 var router = express.Router();
+const {google} = require('googleapis');
+const fs = require('fs');
+const readline = require('readline');
+const util = require('./util')
 
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
 
@@ -13,9 +18,7 @@ router.get('/', function(req, res) {
 module.exports = router; 
 
 
-router.post('/nearbyplaces', async function(req, res, ){
-
-  
+router.post('/nearbyplaces', async function(req, res, ){  
     try {
 
         console.log(req.body);
@@ -53,4 +56,48 @@ router.post('/nearbyplaces', async function(req, res, ){
       } catch (error) {
         console.log(error);
       }
+
+    })
+   
+
+//saves the trip and oath details
+router.post('/saveTripDetails', async function (req, res, ) {
+  try {
+    //console.log(req.body)
+    console.log('inside uploadToDrive.js saveoathdetails  API method')
+    fs.readFile('./routes/credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      util.authorize(JSON.parse(content), util.CheckFileExists, req.body);
+    });
+  }
+  catch (error) { 
+    console.log(error);
+  }
 })
+
+
+
+
+/* end of save trip details */
+
+
+router.post('/downloadTripDetails', async function (req, res, ) {
+  try {
+    console.log(req.body)
+    console.log('inside uploadToDrive.js downloadTripDetails  API method')
+    fs.readFile('./routes/credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      util.authorize(JSON.parse(content), util.downloadTripDetails, req.body);
+    });
+  }
+  catch (error) {
+    console.log(error);
+  }
+})
+
+
+
+
+  
+
+  
