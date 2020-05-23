@@ -72,7 +72,7 @@ router.post('/saveOathDetails', async function (req, res, ) {
       authorize(JSON.parse(content), CheckFileExists);
     });
   }
-  catch (error) {
+  catch (error) { 
     console.log(error);
   }
 })
@@ -85,11 +85,11 @@ function getAuthDetails() {
     "transporter": {},
     //"credentials":{"access_token":req.body.access_token,
     "credentials": {
-      "access_token": "ya29.a0AfH6SMAqRHu0JCRi1ZxMSd6cKnN3PyAozm4pfaPjzvXYyjLro3m_jyWZFMZ4X4ls0RSEERKF6dULec5sJm0fME4y4-BZFR9_59jo4hVEOTwCqZ5LYr563uelAf2JlbNM77fFvBXnyYIRlPGNiacRx22kL1ZNtTPLbzMi",
-      "scope": "https://www.googleapis.com/drive/v3/files",
+    "access_token": "ya29.a0AfH6SMAyxRE7n3Dnp_jAB6O4iJ0OGcAaCwoa6IaMw6S4UfMdD1UsIFsglQgVDVhcFbDSUR0Gj6LgJgu26ReQ_L03rojLCWhB8qt466EnTOvFVP5iN0V52X7olP1QQnWfselXo0gy5dhffGUgYkfKj5SnfeSW1fOuSzzk",
+     "scope": "https://www.googleapis.com/auth/drive",
       "token_type": "Bearer",
       //"expiry_date": req.body.expires_at},
-      "expiry_date": "1589905874808"
+      "expiry_date": "1590205325634"
     },
     "certificateCache": null,
     "certificateExpiry": null,
@@ -110,7 +110,7 @@ function authorize(credentials, callback) {
     client_id, client_secret, redirect_uris[0]);
   const auth = getAuthDetails();
   //assigning user specific data
-  var jsonData = '{"access_token":"' + auth.credentials.access_token + '","scope":"https://www.googleapis.com/auth/drive.file","token_type":"Bearer","expiry_date":' + auth.credentials.expiry_date + '}'
+  var jsonData = '{"access_token":"' + auth.credentials.access_token + '","scope":"https://www.googleapis.com/auth/drive","token_type":"Bearer","expiry_date":' + auth.credentials.expiry_date + '}'
   // parse json
   var jsonObj = JSON.parse(jsonData);
   // stringify JSON Object
@@ -123,81 +123,183 @@ function authorize(credentials, callback) {
 function CheckFileExists(auth) {
   console.log('inside CheckFileExists')
   const drive = google.drive({ version: 'v3', auth });
-  //project specific, needs to change
-  folderId = '1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC',
-    drive.files.list({
-          trashed: false,
-      q: `'${folderId}' in parents and trashed:false`,
+  console.log('inside checkif folder exists')
+  drive.files.list({
+     spaces: 'drive',
+   q:"mimeType='application/vnd.google-apps.folder' and name='NZTripDetails' and trashed:false",
+}, function (err, response) {
+ if (err) {
+   console.log('The API returned an error: ' + err);
+   return;
+ }
+ var files = response.data.files;
+ if (files.length == 0) {
+   console.log('No folders found.');
+ 
+ //create a new folder
+ var fileMetadata = {
+  'name': 'NZTripDetails',
+  'mimeType': 'application/vnd.google-apps.folder'
+};
+drive.files.create({
+  resource: fileMetadata,
+  fields: 'id'
+}, function (err, file) {
+  if (err) {
+  console.log('error in creating foler')
+    console.error(err);
+  } else {
+    console.log('created  new Folder ');
+    }
+  
+folderId =file.data;
+console.log('Folder Id: ', folderId);
+drive.files.list({
+      trashed: false,
+  q: `'${folderId}' in parents and trashed:false`,
 
-    }, function (err, response) {
-      if (err) {
-        console.log('The API returned an error: ' + err);
-        return;
-      }
-      var files = response.data.files;
-      console.log("Files: " + files);
-      if (files.length == 0) {
-        console.log('No files found.');
-      } else {
-        console.log('Files:');
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          console.log('%s (%s)', file.name, file.id);
-        }
-      }
-      console.log('files length is ' + files.length)
-
-      if (files.length == 0) {
-        //no files in drive, upload it
-        fs.readFile('./routes/credentials.json', (err, content) => {
-          if (err) return console.log('Error loading client secret file:', err);
-          authorize(JSON.parse(content), storeFiles);
-        });
-      } else {
-        //update the contets of the file
-        const fileMetadata = {
-          'name': 'NZTripPlanDetails.json',
-          };
-        var media = {
-          mimeType: 'application/json',
-          //Change to trip details that needs to be updated
-          body: 'updated values'
-        }
-        var files = response.data.files;
-        console.log('files length inside update is ' + files.length)
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          console.log('%s (%s)', file.name, file.id);
-        }
-        drive.files.update({
-          fileId: file.id,
-          resource: fileMetadata,
-          media: media,
-        }, (err, file) => {
-          if (err) {
-            // Handle error
-            console.error(err);
-          } else {
-            console.log('updated File Id: ', file.id);
-          }
-        });
-      }
+}, function (err, response) {
+  if (err) {
+    console.log('INSIDE FILE NOT FOUND ' + err);
+    //no files in drive, upload it
+    fs.readFile('./routes/credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      authorize(JSON.parse(content), storeFiles);
     });
+  }else{
+    var files = response.data.files; 
+    console.log('Files:');
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      console.log('%s (%s)', file.name, file.id);
+    }  
+    console.log('INSIDE Folder exists, create files' + err);
+    //no files in drive, upload it
+    fs.readFile('./routes/credentials.json', (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+      authorize(JSON.parse(content), storeFiles);
+    });
+  }
+
+  
+
+  });
+});
+  }
+  else{
+    var files = response.data.files; 
+    console.log('Files:');
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      console.log('%s (%s)', file.name, file.id);
+    }  
+
+     console.log('folder exists:'); 
+     folderId =file.id;
+ console.log('Folder Id: ', folderId);
+ drive.files.list({
+       trashed: false,
+   q: `'${folderId}' in parents and trashed:false`,
+ 
+ }, function (err, response) {
+   if (err) {
+     console.log('INSIDE FILE NOT FOUND ' + err);
+     //no files in drive, upload it
+     fs.readFile('./routes/credentials.json', (err, content) => {
+       if (err) return console.log('Error loading client secret file:', err);
+       authorize(JSON.parse(content), storeFiles);
+     });
+   }else{
+     var files = response.data.files; 
+     console.log('Files:');
+     for (var i = 0; i < files.length; i++) {
+       var file = files[i];
+       console.log('%s (%s)', file.name, file.id);
+     }  
+//update the contets of the file
+const fileMetadata = {
+  'name': 'NZTripPlanDetails.json',
+  };
+var media = {
+  mimeType: 'application/json',
+  //Change to trip details that needs to be updated
+  body: 'updated values'
+}
+drive.files.update({
+  fileId: file.id,
+  resource: fileMetadata,
+  media: media,
+}, (err, file) => {
+  if (err) {
+    // Handle error
+    console.error(err);
+  } else {
+    console.log('updated File Id: ', file.id);
+  }
+});
+   }
+  }
+  );
+ }
+ 
+
+
+
+
+
+
+
+
+  
+});
+
+
 }
 
 //to upload the trip details , for now dummy data is being stored
 function storeFiles(auth) {
   console.log("inside store files");
   const drive = google.drive({ version: 'v3', auth });
+
+  drive.files.list({
+    spaces: 'drive',
+  q:"mimeType='application/vnd.google-apps.folder' and name='NZTripDetails' and trashed:false",
+}, function (err, response) {
+if (err) {
+  console.log('The API returned an error: ' + err);
+  return;
+}
+   var files = response.data.files; 
+    console.log('Files:');
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      console.log('%s (%s)', file.name, file.id);
+  }
+    parents=file.id;
+    console.log('parent folder inside store files is ',parents)
+
   const fileMetadata = {
     'name': 'NZTripPlanDetails.json',
-    parents: ['1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC']//folder name in the drive, will change
+    parents: [parents]//folder name in the drive, will change
   };
+  //save trip related details here
+  var jsonData = 
+    [{
+      "id": 28,
+      "Title": "Sweden"
+    }, {
+      "id": 56,
+      "Title": "USA"
+    }, {
+      "id": 89,
+      "Title": "England"
+    }]
+  var jsonContent = JSON.stringify(jsonData);
+  console.log('jsonContent is'+jsonContent);
 
   var media = {
     mimeType: 'application/json',
-    //Change to project file path
-    body: fs.createReadStream('D:/University/NOtes/SOFTENG_750/Project_NZ_Trip/Group-23-Azure-Ant/express-api/routes/NZTripPlanDetails.json')
+      body: jsonContent  
   };
   drive.files.create({
     resource: fileMetadata,
@@ -211,79 +313,14 @@ function storeFiles(auth) {
       console.log('File Id: ', file.data.id);
     }
   });
+
+}
+ 
+);
 }
 
 
 /* end of save trip details */
-
-/* start of download details */
-
-router.post('/downloadTripDetails', async function (req, res, ) {
-  try {
-    console.log('inside uploadToDrive.js downloadTripDetails  API method')
-    fs.readFile('./routes/credentials.json', (err, content) => {
-      if (err) return console.log('Error loading client secret file:', err);
-      authorize(JSON.parse(content), downloadTripDetails);
-    });
-  }
-  catch (error) {
-    console.log(error);
-  }
-})
-
-function downloadTripDetails(auth) {
-
-  console.log('CheckFileExists')
-  const drive = google.drive({ version: 'v3', auth });
-  folderId = '1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC',
-    // Check File exists
-    drive.files.list({
-      //auth: auth,
-      trashed: false,
-      q: `'${folderId}' in parents and trashed:false`,//to exclude the trash files
-
-    }, function (err, response) {
-      if (err) {
-        console.log('The API returned an error: ' + err);
-        return;
-      }
-      var files = response.data.files;
-      console.log("Files: " + files);
-      if (files.length == 0) {
-        console.log('No files found.');
-      } else {
-        console.log('Files:');
-        for (var i = 0; i < files.length; i++) {
-          var file = files[i];
-          console.log('%s (%s)', file.name, file.id);
-        }
-      }
-      console.log('files length is ' + files.length)
-
-      const drive = google.drive({ version: 'v3', auth });
-      var dest = fs.createWriteStream('./DownLoaded.json');
-      drive.files.get({ fileId: file.id, alt: 'media' }, { responseType: 'stream' },
-        function (err, res) {
-          res.data
-            .on('end', () => {
-              console.log('Done');
-            })
-            .on('error', err => {
-              console.log('Error', err);
-            })
-            .pipe(dest);
-        });
-    });
-}
-
-/* end of download trip details */
-
-
-
-
-
-
-
 
 
   

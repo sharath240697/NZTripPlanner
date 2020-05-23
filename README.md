@@ -35,4 +35,5 @@ The project generally uses standard code style. Use of camel case fields and var
 ### Technology
 Please view various technology and APIs used [here](https://github.com/jake-good/Group-23-Azure-Ant/wiki/APIs-and-Dependencies).
 ### License
-Please view the license for reuse of this project [here](https://github.com/jake-good/Group-23-Azure-Ant/wiki/License)
+Please view the license for reuse of this project [here](https://github.com/jake-good/Group-23-Azure-Ant/wiki/License).
+
