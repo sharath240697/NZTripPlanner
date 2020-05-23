@@ -78,7 +78,7 @@ export function fetchweatherdata(data) {
 }
 
 
-export function saveOathDetails(data)
+export function postsavetrip(data)
 {   
     console.log('in expressActions.js saveOathDetails method');
     return async dispatch => {
@@ -87,7 +87,7 @@ export function saveOathDetails(data)
         console.log('data is'+JSON.stringify(data));
         try {
                    
-            const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/saveOathDetails', {
+            const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/downloadTripDetails', {
                                     method: 'POST', // or 'PUT'
                                     headers: {'Content-Type': 'application/json',},
                                     body: JSON.stringify(data),

@@ -1,7 +1,6 @@
 import {store} from '../index'
 import * as actions from '../Actions/actions';
 
-
 export function setBrowserLocation() {
     if (navigator.geolocation) {
         console.log('in util.js setBrowserlocation function')
@@ -17,3 +16,4 @@ export function setBrowserLocation() {
     console.log('in util.js getcoordinates method before dispatching actions')
     store.dispatch(actions.setbrowserlocation(position.coords))
   }
+

@@ -54,18 +54,18 @@ function authorize(credentials, callback) {
 
 /* start of download details */
 
-router.post('/downloadTripDetails', async function (req, res, ) {
+/*router.post('/downloadTripDetails', async function (req, res, ) {
   try {
     console.log('inside uploadToDrive.js downloadTripDetails  API method')
-    fs.readFile('./routes/credentials.json', (err, content) => {
+   fs.readFile('./routes/credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       authorize(JSON.parse(content), downloadTripDetails);
     });
   }
   catch (error) {
     console.log(error);
-  }
-})
+  
+})*/
 
 function downloadTripDetails(auth) {
   const drive = google.drive({ version: 'v3', auth });

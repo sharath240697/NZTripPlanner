@@ -6,12 +6,12 @@ import Button from '../Button/Button';
 import { connect } from 'react-redux'
 import { setfromtovalidation } from '../../Actions/actions';
 import { fetchnearbyplaces } from '../../Actions/expressActions';
+import { postsavetrip } from '../../Actions/expressActions';
 import { fetchweatherdata } from '../../Actions/expressActions';
 import { store } from '../../index'
 import MapComponent from '../MapComponent/MapComponent'
 import MapComponentDefault from '../MapComponent/MapComponentDefault'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
-
 
 
 const mapStateToProps = state => (
@@ -29,18 +29,19 @@ const mapStateToProps = state => (
     lodging_resturant_types: state.places.resturant_lodging_places.type,
     browser_lat: state.places.browser_location.lat,
     browser_lng: state.places.browser_location.lng,
-    placesOnMap: state.places.placesOnMap
+    placesOnMap: state.places.placesOnMap,
+    credentials: state.oauth.Credentials
   })
 
 const mapDispatchToProps = {
-  setfromtovalidation, fetchnearbyplaces, fetchweatherdata
+  setfromtovalidation, fetchnearbyplaces, fetchweatherdata, postsavetrip
 }
 
 
 
 const PlanTrip = (props) => {
 
-
+/* Sends request to express api once from and to is selected by user*/
   const navigate = () => {
     const type = [];  // type of near by places to be fetched should be defined
     console.log(props.from_validation + ' props.from_validation');
@@ -64,8 +65,17 @@ const PlanTrip = (props) => {
   }
 
 
-
+/* finds waypoints required to render on map*/
   const waypoints =  props.placesOnMap.map(place => place.place_id)
+
+  /* handle save trip function */
+const  handlesavetrip = () => {
+   // console.log(props.credentials)
+    const access = props.credentials.response.wc;
+    console.log(access)
+    props.postsavetrip({credentials: access, trip: props.placesOnMap})
+  }
+
   return (
     <div>
       {(!props.from_validation || !props.to_validation) && <h2>Please select your Start location and destination</h2>}<br /><br />
@@ -82,6 +92,7 @@ const PlanTrip = (props) => {
 
         <NearbyPlaces func={navigate()}/>
       </div>
+      <Button name='Save' className='button' onClick={handlesavetrip} ></Button>
     </div>
   );
 }

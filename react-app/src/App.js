@@ -6,7 +6,6 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/NavBar/NavigationBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
-import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
 import OAuth from './Components/OAuth/OAuth';
 
