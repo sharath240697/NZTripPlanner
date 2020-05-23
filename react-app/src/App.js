@@ -36,6 +36,7 @@ const App = (props) => {
       <br />
       <br />
       <Switch>
+        <Route path="/" component={PlanTrip} />
         <Route path="/plantrip" component={PlanTrip} />
         <Route path="/savedtrip" component={SavedTrip} />
       </Switch>

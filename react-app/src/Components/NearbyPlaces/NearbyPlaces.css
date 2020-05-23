@@ -50,6 +50,7 @@
   flex-direction: row;
   justify-content: center;
   padding-bottom: 10px;
+  width: 90%;
 }
 
 .ToggleBox p {
