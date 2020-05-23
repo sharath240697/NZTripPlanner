@@ -13,6 +13,7 @@ import MapComponent from '../MapComponent/MapComponent'
 import MapComponentDefault from '../MapComponent/MapComponentDefault'
 import NearbyPlaces from '../NearbyPlaces/NearbyPlaces';
 import Weather from '../Weather/Weather';
+import SaveTrip from '../SaveTrip/SaveTrip';
 
 
 
@@ -91,7 +92,7 @@ const PlanTrip = (props) => {
 
         <NearbyPlaces func={navigate()} />
       </div>
-      <Button name='Save' className='button' onClick={handlesavetrip} ></Button>
+      <SaveTrip />
     </div>
   );
 }
