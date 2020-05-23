@@ -5,8 +5,6 @@ export const initialState = {
         name: undefined,
         accessToken: undefined,
         loggedIn: false,
-        LoginDetails: undefined,
-        expiry: undefined
     }
 }
 

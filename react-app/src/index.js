@@ -9,8 +9,20 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import rootReducer from './Reducers/index'
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk))) ///Creating Redus store
+
+const persistConfig = {
+  key: 'root',
+  storage: storage,
+  whitelist: ['oauth']  // see "Merge Process" section for details.
+ };
+
+ const pReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = createStore(pReducer, composeWithDevTools(applyMiddleware(thunk))) ///Creating Redus store
+export const persistor = persistStore(store); 
 
 
 console.log('in src/index.js');

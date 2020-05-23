@@ -21,36 +21,30 @@ const mapStateToProps = (state) => ({
 
 export function OAuth (props) {
 
-    const [name, setName] = useState(props.name);
-
     const responseGoogle = (response) => {
         console.log(response)
         console.log("inside responseGoogle function ")
         if (response.profileObj === undefined) {
-            setName(undefined)
             store.dispatch(saveOathDetails({
-                Credentials: {
+                
                     name: undefined,
-                    accessToken: undefined,
                     loggedIn: false,
                     LoginDetails: undefined,
-                    expiry: undefined
-                } 
+                    expiry: undefined,
+                response: response
             }))
         } else {
-            setName(response.profileObj.name)
+           
             store.dispatch(saveOathDetails({
-                Credentials: {
                     name: response.profileObj.name,
-                    accessToken: response.tokenObj.access_token,
                     loggedIn: true,
                     LoginDetails: undefined,
-                    expiry: response.tokenObj.expires_at
-                }
+                    expiry: response.tokenObj.expires_at,
+                response: response
             }))
         }   
     }
-        if (name === undefined) {
+        if (props.name === undefined) {
             return (
                 <div>
                     <GoogleLogin
@@ -63,7 +57,7 @@ export function OAuth (props) {
                         name={props.name}
                         loggedIn={props.loggedIn}
                         accessToken={props.accessToken}
-                        onClick={props.LoginDetails}
+                       
                     />
                 </div>
             )
@@ -72,7 +66,7 @@ export function OAuth (props) {
                 <div>
                     <GoogleLogin
                         clientId="4273262105-e7eogru655unj4t3q20ii204dvk8u397.apps.googleusercontent.com"
-                        buttonText={"Signed In As " + name}
+                        buttonText={"Signed In As " + props.name}
                         onSuccess={responseGoogle}
                         onFailure={responseGoogle}
                         cookiePolicy={'single_host_origin'}
@@ -80,7 +74,7 @@ export function OAuth (props) {
                         loggedIn={props.loggedIn}
                         accessToken={props.accessToken}
                         scope="https://www.googleapis.com/auth/drive.file"
-                        onClick={props.LoginDetails}
+                       
                     />
                 </div>
             )
