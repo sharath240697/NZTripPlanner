@@ -6,8 +6,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './Components/NavBar/NavBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
-import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
+import OAuth from './Components/OAuth/OAuth'
 
 
 const mapStateToProps = state => (
@@ -33,10 +33,13 @@ const App = (props) => {
       <br />
       <br />
       <Switch>
-        <Route path="/" exact component={PlanTrip} />
+        {console.log('in app inside Switch component')}
+        <Route exact path="/" component={PlanTrip} />
+        {console.log('in app inside Switch after 1st route component')}
         <Route path="/plantrip" component={PlanTrip} />
         <Route path="/savedtrip" component={SavedTrip} />
       </Switch>
+      <OAuth />
     </div>
   );
 }
