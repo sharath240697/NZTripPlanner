@@ -8,8 +8,6 @@ const {google} = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
 module.exports = router; 
-
-
 function getAuthDetails() {
   const auth =
   {
@@ -18,11 +16,11 @@ function getAuthDetails() {
     "transporter": {},
     //"credentials":{"access_token":req.body.access_token,
     "credentials": {
-    "access_token": "ya29.a0AfH6SMAVORRbvrWQcKeFozNV6GPhpOriHRItV__FsC9ajnPjdSUCuSDRGS5_hbkqJBMAVOJ4X14vjnh-OW7VXJNhTKSeU4Qb6_UESzLWAV6ruf5-G7iNBNq96g39xXP2zldIzolenqFBrflew5gSduFeNItZ-bjBgek_",
+    "access_token": "ya29.a0AfH6SMAyxRE7n3Dnp_jAB6O4iJ0OGcAaCwoa6IaMw6S4UfMdD1UsIFsglQgVDVhcFbDSUR0Gj6LgJgu26ReQ_L03rojLCWhB8qt466EnTOvFVP5iN0V52X7olP1QQnWfselXo0gy5dhffGUgYkfKj5SnfeSW1fOuSzzk",
      "scope": "https://www.googleapis.com/auth/drive",
       "token_type": "Bearer",
       //"expiry_date": req.body.expires_at},
-      "expiry_date": "1590131771281"
+      "expiry_date": "1590205325634"
     },
     "certificateCache": null,
     "certificateExpiry": null,
@@ -70,12 +68,25 @@ router.post('/downloadTripDetails', async function (req, res, ) {
 })
 
 function downloadTripDetails(auth) {
-  
-  var fileId;
   const drive = google.drive({ version: 'v3', auth });
-  //var fileId = '1IQlTW_sB1_ZpFwlatETxKWBUuQ_7r7ne';
-  //project specific, needs to change
-  folderId = '1zDamZRAyWaYyg5cvM5TNDm7YhFf5tsyC',
+  console.log("inside download files");
+  drive.files.list({
+    spaces: 'drive',
+  q:"mimeType='application/vnd.google-apps.folder' and name='NZTripDetails' and trashed:false",
+}, function (err, response) {
+if (err) {
+  console.log('The API returned an error: ' + err);
+  return;
+}
+   var files = response.data.files; 
+    console.log('Files:');
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      console.log('%s (%s)', file.name, file.id);
+  }
+    parents=file.id;
+    console.log('parent folder inside download files is ',parents)
+   folderId = parents,
     drive.files.list({
           trashed: false,
       q: `'${folderId}' in parents and trashed:false`,
@@ -98,8 +109,7 @@ function downloadTripDetails(auth) {
         }
       }
       console.log('files length is ' + files.length)
-       var dest = 'DownLoaded.json';    
-       
+           
        drive.files.get(
         { 
         fileId: fileId,
@@ -109,6 +119,10 @@ function downloadTripDetails(auth) {
           console.log('response is'+res.data);        
     });
 });
+
+
+}
+  );
     }
 
 
