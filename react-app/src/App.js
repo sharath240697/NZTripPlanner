@@ -8,8 +8,6 @@ import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
 import Dummy from './Components/Dummy/Dummy';
 import * as utils from './Util/Util'
-import OAuth from './Components/OAuth/OAuth';
-
 
 
 const mapStateToProps = state => (
@@ -32,11 +30,10 @@ const App = (props) => {
   return (
     <div className="App" >
       <NavBar />
-      <OAuth />
       <br />
       <br />
       <Switch>
-        <Route path="/" component={PlanTrip} />
+        <Route path="/" exact component={PlanTrip} />
         <Route path="/plantrip" component={PlanTrip} />
         <Route path="/savedtrip" component={SavedTrip} />
       </Switch>
