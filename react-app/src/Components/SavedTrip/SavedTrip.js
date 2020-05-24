@@ -79,8 +79,6 @@ class SavedTrip extends Component {
           {this.state.loading ? <p className="TripTable">Loading...</p> :
             <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
           }
-          <MapComponentDefault origin={this.state.selected.trip.from} destination={this.state.selected.trip.to.id} browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }} waypoints={this.state.selected.trip.placesOnMap} />
-          <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
           {this.state.selected.trip.placesOnMap !== undefined && console.log(this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1])}
           {this.state.selected.trip.placesOnMap !== undefined && <MapComponent
             origin={this.state.selected.trip.to.id}
