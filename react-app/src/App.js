@@ -7,7 +7,6 @@ import NavBar from './Components/NavBar/NavBar';
 import PlanTrip from './Components/PlanTrip/PlanTrip'
 import SavedTrip from './Components/SavedTrip/SavedTrip'
 import * as utils from './Util/Util'
-import OAuth from './Components/OAuth/OAuth'
 
 
 const mapStateToProps = state => (
@@ -39,7 +38,6 @@ const App = (props) => {
         <Route path="/plantrip" component={PlanTrip} />
         <Route path="/savedtrip" component={SavedTrip} />
       </Switch>
-      <OAuth />
     </div>
   );
 }
