@@ -24,3 +24,8 @@ h3 {
 .SavedTrip .NearbyPlaces {
   width: 30%;
 }
+
+p {
+  opacity: 0.5;
+  font-size: 1.2rem;
+}
