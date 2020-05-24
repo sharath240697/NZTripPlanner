@@ -13,13 +13,13 @@ export default function oauthReducer(state = initialState, action) {
     switch (action.type) {
         case actions.SAVEOAUTHDATA:
             {
-                console.log('saving oauth data');
+                // console.log('saving oauth data');
                 return { ...state, Credentials: action.payload }
             }
 
         case actions.STORESAVEDTRIPS:
             {
-                console.log('storing trips');
+                // console.log('storing trips');
 
                 return { ...state, savedTrips: action.payload }
             }

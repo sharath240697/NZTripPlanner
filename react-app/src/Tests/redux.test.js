@@ -107,7 +107,8 @@ describe('oauth reducer', () => {
               name: undefined,
               accessToken: undefined,
               loggedIn: false,
-          }
+          },
+          savedTrips: []
         })
       })
     
@@ -128,7 +129,8 @@ describe('oauth reducer', () => {
               name: 'Jaedyn',
             accessToken: 'aw3f2353532',
             loggedIn: true,
-          }     
+          },
+          savedTrips: []     
           }
         )
       })
@@ -182,7 +184,7 @@ describe('oauth reducer', () => {
               loading: {
                 loading_status: true
               },
-            
+              saveProgress: 'Done',
               testdata: {
                 status: '',
                 message: ''

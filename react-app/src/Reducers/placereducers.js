@@ -49,8 +49,8 @@ export default function placeReducer(state = initialState, action) {
   switch (action.type) {
     case actions.CHANGE_FROM_PLACE:
       {
-        console.log(state);
-        console.log(action.payload);
+        // console.log(state);
+        // console.log(action.payload);
         var status;
         if (action.payload.place_location.lat === undefined) { status = false }
         else { status = true }
@@ -67,8 +67,8 @@ export default function placeReducer(state = initialState, action) {
 
     case actions.CHANGE_TO_PLACE:
       {
-        console.log(state);
-        console.log(action.payload);
+        // console.log(state);
+        // console.log(action.payload);
 
         if (action.payload.place_location.lat === undefined) { status = false }
         else { status = true }
@@ -85,14 +85,14 @@ export default function placeReducer(state = initialState, action) {
 
     case actions.LOADING:
       {
-        console.log("in LOADING case of placereducers.js")
+        // console.log("in LOADING case of placereducers.js")
         return { ...state, loading: { loading_status: true } }
       }
 
 
     case actions.TESTDATA:
       {
-        console.log("in TESTDATA case of placereducers.js")
+        // console.log("in TESTDATA case of placereducers.js")
         return {
           ...state, loading: { loading_status: false },
           testdata: { status: action.payload.status, message: action.payload.message }
@@ -101,38 +101,38 @@ export default function placeReducer(state = initialState, action) {
 
     case actions.FROMTOVALIDATION:
       {
-        console.log("in FROMTOVALIDATION case of placereducers.js")
+        // console.log("in FROMTOVALIDATION case of placereducers.js")
         return { ...state, from_to_validation: { from: action.payload.from, to: action.payload.to } }
       }
 
     case actions.SAVENEARBYATTRACTIONS:
       {
-        console.log("in SAVENEARBYATTRACTIONS case of placereducres.js")
-        console.log(action.payload)
+        // console.log("in SAVENEARBYATTRACTIONS case of placereducres.js")
+        // console.log(action.payload)
         return { ...state, nearby_tourist_attractions: { attractions: action.payload } }
       }
 
     case actions.SAVENEARBYLODGINGS:
       {
-        console.log("in SAVENEARBYLODGINGS case of placereducres.js")
-        console.log(action.payload)
+        // console.log("in SAVENEARBYLODGINGS case of placereducres.js")
+        // console.log(action.payload)
         return { ...state, nearby_lodgings: { lodgings: action.payload } }
       }
 
     case actions.SETBROWSERLOCATION:
       {
-        console.log("in SETBROWSERLOCATION case of placereducres.js")
-        console.log(action.payload)
+        // console.log("in SETBROWSERLOCATION case of placereducres.js")
+        // console.log(action.payload)
         return { ...state, browser_location: { accuracy: action.payload.accuracy, altitude: action.payload.altitude, heading: action.payload.heading, lat: action.payload.latitude, lng: action.payload.longitude } }
       }
 
     case actions.ADDPLACETOMAP:
       {
-        console.log(state);
+        // console.log(state);
         let index = state.placesOnMap.findIndex(place => place.id === action.payload.id);
         if (index === -1) {
           const obj = { ...state, placesOnMap: [...state.placesOnMap, action.payload] };
-          console.log(obj)
+          // console.log(obj)
           return obj;
         }
         return state;
@@ -145,7 +145,7 @@ export default function placeReducer(state = initialState, action) {
 
     case actions.SETSAVEPROGRESS:
       {
-        console.log('progress update');
+        // console.log('progress update');
         return {
           ...state, saveProgress: action.payload,
           to: {
