@@ -14,12 +14,18 @@ describe( 'initial state', () => {
 test('check initial store state', () => {
     const keys = Object.keys(store.getState());
     //check the right number of reducers are created
-    expect(keys.length).toBe(3);
+    expect(keys.length).toBe(4);
     expect(keys[0]).toBe('posts');
     expect(keys[1]).toBe('places');
-    expect(keys[2]).toBe('weather');   
+    expect(keys[2]).toBe('oauth');
+    expect(keys[3]).toBe('weather');   
 })
 
+test('check initial state of oauth', () => {
+  expect(store.getState().oauth.Credentials.name).toBe(undefined);
+  expect(store.getState().oauth.Credentials.accessToken).toBe(undefined);
+  expect(store.getState().oauth.Credentials.loggedIn).toBe(false);
+})
 
 test('check initial state of posts', () => {
     expect(store.getState().posts.loading).toBe(false);
@@ -92,6 +98,41 @@ test('should return the initial state', () => {
       )
     })
   })
+
+  //consider reducers for oauth
+describe('oauth reducer', () => {
+  test('should return the initial state', () => {
+        expect(rootReducer(store.getState().oauth.Credentials, {}).oauth).toEqual({
+            Credentials: {
+              name: undefined,
+              accessToken: undefined,
+              loggedIn: false,
+          }
+        })
+      })
+    
+      test('should handle SAVEOAUTHDATA', () => {
+        expect(
+          rootReducer(store.getState().oauth, {
+            type: actions.SAVEOAUTHDATA,
+            payload: {
+              name: 'Jaedyn',
+              accessToken: 'aw3f2353532',
+              loggedIn: true,
+        }
+            
+          }).oauth
+        ).toEqual(
+          {
+            Credentials: {
+              name: 'Jaedyn',
+            accessToken: 'aw3f2353532',
+            loggedIn: true,
+          }     
+          }
+        )
+      })
+    })
 
   //consider reducers for posts
   describe('posts reducer', () => {
