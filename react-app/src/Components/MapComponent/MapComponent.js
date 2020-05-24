@@ -20,7 +20,7 @@ class MapComponent extends React.Component {
         googleMapURL:
           "https://maps.googleapis.com/maps/api/js?key=AIzaSyBjwnK_zvDGQokuzDJ0NVnR979L_KNEYuo&libraries=geometry,drawing,places",
         loadingElement: <div style={{ height: `50%` }} />,
-        containerElement: <div className="MapComponent" style={{ width: `600px`, height: `600px` }} />,
+        containerElement: <div className="MapComponent" style={{ height: `600px` }} />,
         mapElement: <div style={{ height: `100%` }} />,
       }),
       withScriptjs,
