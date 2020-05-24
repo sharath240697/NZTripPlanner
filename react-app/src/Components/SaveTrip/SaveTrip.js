@@ -65,7 +65,7 @@ class SaveTrip extends Component {
         const trip = {
             id: id,
             trip: {
-                placesOnMap: this.props.placesOnMap.map(place => place.id),
+                placesOnMap: this.props.placesOnMap.map(place => place.place_id),
                 to: {
                     id: this.props.to_placeId,
                     lat: this.props.to_lat,
