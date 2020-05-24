@@ -159,7 +159,14 @@ export default function placeReducer(state = initialState, action) {
               placeId: "",
               types: [],
               place_location: { lat: undefined, lng: undefined }
-            } }
+            },
+            placesOnMap: [],
+            from_to_validation: {       // state variable which holds result of validation of from to address object obtained from searching
+              from: false,
+              to: false
+            },
+            nearby_tourist_attractions: { attractions: [] },
+            nearby_lodgings: { lodgings: [] }, }
         }
 
 

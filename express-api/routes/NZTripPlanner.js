@@ -66,6 +66,7 @@ router.post('/nearbyplaces', async function(req, res, ){
 //saves the trip and oath details
 router.post('/saveTripDetails', async function (req, res, ) {
   try {
+    downloaded_trip=undefined;
     //console.log(req.body)
     console.log('inside uploadToDrive.js saveoathdetails  API method')
     fs.readFile('./routes/credentials.json', (err, content) => {
@@ -93,6 +94,7 @@ router.post('/saveTripDetails', async function (req, res, ) {
 
 router.post('/downloadTripDetails', async function (req, res, ) {
   try {
+    downloaded_trip=undefined;
     console.log(req.body)
     console.log('inside uploadToDrive.js downloadTripDetails  API method')
     fs.readFile('./routes/credentials.json',async  (err, content) => {
