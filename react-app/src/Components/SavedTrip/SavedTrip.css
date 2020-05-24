@@ -19,10 +19,13 @@ h3 {
 
 .SavedTrip .MapComponent {
   width: 30%;
-  margin-top: 55px;
 }
 
 .SavedTrip .NearbyPlaces {
   width: 30%;
-  margin-top: 55px;
+}
+
+p {
+  opacity: 0.5;
+  font-size: 1.2rem;
 }

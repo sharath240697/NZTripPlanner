@@ -48,8 +48,7 @@ class SavedTrip extends Component {
   componentWillMount() {
     if (this.props.credentials.response) {
       this.props.postloadtrips({ credentials: this.props.credentials.response.wc }).then(() => {
-        this.setSelectedTrip(this.props.savedTrips.root[0]);
-        this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places })
+
       })
     }
 
@@ -60,7 +59,6 @@ class SavedTrip extends Component {
     this.setState({
       selected: selected
     })
-
   }
   // componentDidMount(){}
   // componentWillUnmount(){}
@@ -68,21 +66,24 @@ class SavedTrip extends Component {
   // componentWillReceiveProps(){}
   // shouldComponentUpdate(){}
   // componentWillUpdate(){}
-  // componentDidUpdate(){}
+  componentDidUpdate() {
+    this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
+  }
 
   render() {
     return (
-      <div className="SavedTrip">
-        <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
-        {this.state.selected.trip.placesOnMap !== undefined && console.log(this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length-1])}
+      this.props.credentials.response ? (
+        <div className="SavedTrip">
+          <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
+          {this.state.selected.trip.placesOnMap !== undefined && console.log(this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length-1])}
        {this.state.selected.trip.placesOnMap !== undefined && <MapComponent
        origin={this.state.selected.trip.to.id} 
        destination={this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length-1]} 
        browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }} 
        waypoints={ this.state.selected.trip.placesOnMap.filter(waypoint => waypoint!==this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length-1])} />}
-        
-        <NearbyPlaces />
-      </div>
+          <NearbyPlaces />
+        </div>) :
+        (<p>Whoops... You need to log in with google to view saved trips</p>)
     );
   }
 }
