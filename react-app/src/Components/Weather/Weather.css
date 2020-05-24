@@ -2,15 +2,21 @@
  * Weather css File
 */
 
+.WeatherBox {
+    min-width: 124px;
+    width: min-content;
+}
+
 .Weather {
     display: flex;
     flex-direction: row;
-    width: 20%;
+    
     border-radius: 5px;
     justify-content: space-evenly;
     align-items: center;
     background-color: rgb(196, 196, 196);
-    margin: 10px 0;
+    padding: 0 10px;
+    height: 46px;
 }
 
 img {
