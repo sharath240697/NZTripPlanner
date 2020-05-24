@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import TripTable from "../TripTable/TripTable";
 import "./SavedTrip.css";
+import { postloadtrips } from '../../Actions/expressActions'
+import { connect } from "react-redux";
+
+const mapDispatchToProps = {
+  postloadtrips
+}
+
+const mapStateToProps = (state) => ({
+  credentials: state.oauth.Credentials
+});
 
 class SavedTrip extends Component {
   // constructor(props){
@@ -8,7 +18,9 @@ class SavedTrip extends Component {
   // this.state = {};
   // }
 
-  // componentWillMount(){}
+  componentWillMount() {
+    this.props.postloadtrips({ credentials: this.props.credentials.response.wc })
+  }
   // componentDidMount(){}
   // componentWillUnmount(){}
 
@@ -27,4 +39,4 @@ class SavedTrip extends Component {
   }
 }
 
-export default SavedTrip;
+export default connect(mapStateToProps, mapDispatchToProps)(SavedTrip);

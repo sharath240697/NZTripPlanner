@@ -86,21 +86,46 @@ export function postsavetrip(data)
         dispatch(actions.loading());        
         console.log('data is'+JSON.stringify(data));
         try {
-                   
+
             const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/saveTripDetails', {
-                                    method: 'POST', // or 'PUT'
-                                    headers: {'Content-Type': 'application/json',},
-                                    body: JSON.stringify(data),
-                                                 })
-                                                 const result = await savedDetails.json();
-                                                console.log(result);
-                                                dispatch(actions.saveOathDetails(result));
-          
+                method: 'POST', // or 'PUT'
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify(data),
+            })
+            const result = await savedDetails.json();
+            console.log(result);
+            dispatch(actions.saveOathDetails(result));
+
         } catch (error) {
             console.log('BIGG FATTT ERROOORRR! in expressActions.js saveOathDetails method')
             console.log(error);
         }
     }
+}
+
+export function postloadtrips(data) {
+    console.log('in expressActions.js saveOathDetails method');
+    return async dispatch => {
+        console.log('inside return in expressActions.js saveOathDetails method ');
+        dispatch(actions.loading());
+        console.log('data is' + JSON.stringify(data));
+        try {
+
+            const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/downloadTripDetails', {
+                method: 'POST', // or 'PUT'
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify(data),
+            })
+            const result = await savedDetails.json();
+            console.log(result);
+            dispatch(actions.saveOathDetails(result));
+
+        } catch (error) {
+            console.log('BIGG FATTT ERROOORRR! in expressActions.js saveOathDetails method')
+            console.log(error);
+        }
+    }
+
 
 }
 
