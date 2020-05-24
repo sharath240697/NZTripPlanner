@@ -83,10 +83,10 @@ class SavedTrip extends Component {
           }
           {this.state.selected.trip.placesOnMap !== undefined && console.log(this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1])}
           {this.state.selected.trip.placesOnMap !== undefined && <MapComponent
-            origin={this.state.selected.trip.to.id}
-            destination={this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1]}
+            origin={this.state.selected.trip.from.id}
+            destination={this.state.selected.trip.to.id}
             browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }}
-            waypoints={this.state.selected.trip.placesOnMap.filter(waypoint => waypoint !== this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1])} />}
+            waypoints={this.state.selected.trip.placesOnMap} />}
 
           <NearbyPlaces />
         </div>) :
