@@ -59,8 +59,6 @@ class SavedTrip extends Component {
     this.setState({
       selected: selected
     })
-    this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
-
   }
   // componentDidMount(){}
   // componentWillUnmount(){}
@@ -68,7 +66,9 @@ class SavedTrip extends Component {
   // componentWillReceiveProps(){}
   // shouldComponentUpdate(){}
   // componentWillUpdate(){}
-  // componentDidUpdate(){}
+  componentDidUpdate() {
+    this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
+  }
 
   render() {
     return (
