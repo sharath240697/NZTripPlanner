@@ -7,7 +7,7 @@ var router = express.Router();
 const {google} = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
-
+var downloaded_trip;
 
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
 
@@ -85,9 +85,16 @@ router.post('/downloadTripDetails', async function (req, res, ) {
   try {
     console.log(req.body)
     console.log('inside uploadToDrive.js downloadTripDetails  API method')
-    fs.readFile('./routes/credentials.json', (err, content) => {
+    fs.readFile('./routes/credentials.json',async  (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
-      authorize(JSON.parse(content),downloadTripDetails, req.body);
+     const data = await authorize(JSON.parse(content),downloadTripDetails, req.body);
+    
+    
+     setTimeout(function(){
+      console.log('after calling authorize method')
+      console.log(downloaded_trip)
+      res.send(downloaded_trip)
+    }, 9000); 
     });
   }
   catch (error) {
@@ -134,7 +141,7 @@ router.post('/downloadTripDetails', async function (req, res, ) {
 }
 
 //authorising the access of the user using the token
- function authorize (credentials, callback, req_body) {
+ async function authorize (credentials, callback, req_body) {
   //assigning  the application related data
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
@@ -147,7 +154,11 @@ router.post('/downloadTripDetails', async function (req, res, ) {
   // stringify JSON Object
   var jsonContent = JSON.stringify(jsonObj);
   oAuth2Client.setCredentials(JSON.parse(jsonContent));
-  callback(oAuth2Client,req_body);
+  console.log('in authorize b4 callback')
+  const data = await callback(oAuth2Client,req_body);
+  console.log('after callback')
+  console.log(data)
+  return data;
 }
 
 //check if the file exists
@@ -327,18 +338,16 @@ if (err) {
 }
 );
 }
-
-
-  function downloadTripDetails(auth) {
+  async function downloadTripDetails(auth) {
   const drive = google.drive({ version: 'v3', auth });
   console.log("inside download files");
-  drive.files.list({
+  data = ( drive.files.list({
     spaces: 'drive',
   q:"mimeType='application/vnd.google-apps.folder' and name='NZTripDetails' and trashed:false",
 }, function (err, response) {
 if (err) {
   console.log('The API returned an error: ' + err);
-  return;
+  return 'sharath';
 }
    var files = response.data.files; 
     console.log('Files:');
@@ -349,11 +358,11 @@ if (err) {
     parents=file.id;
     console.log('parent folder inside download files is ',parents)
    folderId = parents,
-    drive.files.list({
+   drive.files.list({
           trashed: false,
       q: `'${folderId}' in parents and trashed:false`,
 
-    }, function (err, response) {
+    }, async function (err, response) {
       if (err) {
         console.log('The API returned an error: ' + err);
         return;
@@ -372,19 +381,31 @@ if (err) {
       }
       console.log('files length is ' + files.length)
            
-       drive.files.get(
+      const data = await drive.files.get(
         { 
         fileId: fileId,
          alt: 'media'}, {responseType: 'application/json'},
-        function(err, res) {
+       async  function(err, res) {
     
-          const data = JSON.parse(res.data)
-          console.log(data.trip.placesOnMap);
+          const data = await JSON.parse(res.data)
+       downloaded_trip = data;
+       console.log(downloaded_trip)
+         // console.log(data.trip.placesOnMap);
               
     });
-});
+    return data
+}
+);
 
 
 }
-  );
+  ));
+  console.log('at end') 
+  console.log(data);
     }
+
+function tripdetailseditor(trip,gdrive_trips)
+{
+  
+
+}
