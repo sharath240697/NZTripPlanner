@@ -86,7 +86,7 @@ export function postsavetrip(data) {
         console.log('data is' + JSON.stringify(data));
         try {
 
-            const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/downloadTripDetails', {
+            const savedDetails = await fetch('http://localhost:9000/NZTripPlanner/saveTripDetails', {
                 method: 'POST', // or 'PUT'
                 headers: { 'Content-Type': 'application/json', },
                 body: JSON.stringify(data),
@@ -100,7 +100,6 @@ export function postsavetrip(data) {
             console.log(error);
         }
     }
-
 }
 
 
