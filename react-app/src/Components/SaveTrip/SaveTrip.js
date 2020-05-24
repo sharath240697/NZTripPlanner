@@ -13,7 +13,13 @@ const mapStateToProps = (state) => ({
     LoginDetails: state.oauth.Credentials.LoginDetails,
     expiry: state.oauth.Credentials.expiry,
     credentials: state.oauth.Credentials,
-    placesOnMap: state.places.placesOnMap
+    placesOnMap: state.places.placesOnMap,
+    from_placeId: state.places.from.placeId,
+    to_placeId: state.places.to.placeId,
+    to_lat: state.places.to.place_location.lat,
+    to_lng: state.places.to.place_location.lng,
+    place_type: state.places.tourist_places.type,
+    lodging_resturant_types: state.places.resturant_lodging_places.type,
 });
 
 const mapDispathToProps = {
@@ -48,9 +54,13 @@ class SaveTrip extends Component {
         const trip = {
             id: id,
             trip: {
-                placesOnMap: this.props.placesOnMap,
-                to: "to",
-                from: "from",
+                placesOnMap: this.props.placesOnMap.map(place => place.id),
+                to: {
+                    id: this.props.to_placeId,
+                    lat: this.props.to_lat,
+                    lng: this.props.to_lng
+                },
+                from: this.props.from_placeId,
                 name: "name"
             }
         }

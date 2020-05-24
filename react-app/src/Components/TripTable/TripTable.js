@@ -25,6 +25,8 @@ class SavedTrip extends Component {
   render() {
     return (
       <div className="Table-Container">
+        <h3>Previous Trips:</h3>
+
         <TableContainer component={Paper}>
           <Table>
             <TableHead className="Header">
