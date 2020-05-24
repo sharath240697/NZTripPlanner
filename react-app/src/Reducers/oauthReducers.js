@@ -21,6 +21,7 @@ export default function oauthReducer(state = initialState, action) {
         case actions.STORESAVEDTRIPS:
             {
                 console.log('storing trips');
+
                 return { ...state, savedTrips: action.payload }
             }
 

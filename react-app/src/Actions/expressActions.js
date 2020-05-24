@@ -98,6 +98,7 @@ export function postsavetrip(data) {
         } catch (error) {
             console.log('BIGG FATTT ERROOORRR! in expressActions.js saveOathDetails method')
             console.log(error);
+            dispatch(actions.setSaveProgress("Done"));
         }
     }
 }

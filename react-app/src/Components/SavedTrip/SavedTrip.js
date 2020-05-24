@@ -51,7 +51,9 @@ class SavedTrip extends Component {
       this.setState({ loading: true });
       this.props.postloadtrips({ credentials: this.props.credentials.response.wc }).then(() => {
         this.setState({ loading: false });
-        this.setSelectedTrip(this.props.savedTrips.root[0]);
+        if (this.props.savedTrips.root.length != 0) {
+          this.setSelectedTrip(this.props.savedTrips.root[0]);
+        }
       })
     }
 
