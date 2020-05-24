@@ -69,6 +69,11 @@ router.post('/saveTripDetails', async function (req, res, ) {
       if (err) return console.log('Error loading client secret file:', err);
       authorize(JSON.parse(content), CheckFileExists, req.body);
     });
+    setTimeout(function(){
+      console.log('after calling authorize method')
+      console.log(downloaded_trip)
+     
+    }, 9000); 
   }
   catch (error) { 
     console.log(error);
@@ -265,7 +270,7 @@ const fileMetadata = {
 var media = {
   mimeType: 'application/json',
   //Change to trip details that needs to be updated
-  body: JSON.stringify({...req_body.trip})
+  body: JSON.stringify({root: [{...req_body.trip}]})
 }
 drive.files.update({
   fileId: file.id,
@@ -403,9 +408,3 @@ if (err) {
   console.log('at end') 
   console.log(data);
     }
-
-function tripdetailseditor(trip,gdrive_trips)
-{
-  
-
-}
