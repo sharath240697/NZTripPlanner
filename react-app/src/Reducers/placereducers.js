@@ -26,7 +26,7 @@ export const initialState = {
   },
 
   tourist_places: { type: ['tourist_attraction', 'amusement_park', 'aquarium', 'art_gallery', 'church', 'hindu_temple', 'zoo', 'museum', 'place_of_worship'] }, // more plcae type should be added later
-  resturant_lodging_places: { type: ['bakery','bar','cafe','liquor_store','lodging','meal_delivery','meal_takeaway','restaurant','supermarket'] }, // more plcae type should be added later
+  resturant_lodging_places: { type: ['bakery', 'bar', 'cafe', 'liquor_store', 'lodging', 'meal_delivery', 'meal_takeaway', 'restaurant', 'supermarket'] }, // more plcae type should be added later
 
   nearby_tourist_attractions: { attractions: [] },
   nearby_lodgings: { lodgings: [] },
@@ -112,7 +112,7 @@ export default function placeReducer(state = initialState, action) {
         return { ...state, nearby_tourist_attractions: { attractions: action.payload } }
       }
 
-      case actions.SAVENEARBYLODGINGS:
+    case actions.SAVENEARBYLODGINGS:
       {
         console.log("in SAVENEARBYLODGINGS case of placereducres.js")
         console.log(action.payload)
@@ -143,31 +143,27 @@ export default function placeReducer(state = initialState, action) {
         return { ...state, placesOnMap: [...state.placesOnMap.filter((place) => place.id !== action.payload.id)] }
       }
 
-      case actions.SETSAVEPROGRESS:
-        {
-            console.log('progress update');
-            return { ...state, saveProgress: action.payload, from: {
-              placeholder: "From",
-              description: "",
-              placeId: "",
-              types: [],
-              place_location: { lat: undefined, lng: undefined }
-            },
-            to: {
-              placeholder: "To",
-              description: "",
-              placeId: "",
-              types: [],
-              place_location: { lat: undefined, lng: undefined }
-            },
-            placesOnMap: [],
-            from_to_validation: {       // state variable which holds result of validation of from to address object obtained from searching
-              from: false,
-              to: false
-            },
-            nearby_tourist_attractions: { attractions: [] },
-            nearby_lodgings: { lodgings: [] }, }
+    case actions.SETSAVEPROGRESS:
+      {
+        console.log('progress update');
+        return {
+          ...state, saveProgress: action.payload,
+          to: {
+            placeholder: "To",
+            description: "",
+            placeId: "",
+            types: [],
+            place_location: { lat: undefined, lng: undefined }
+          },
+          placesOnMap: [],
+          from_to_validation: {       // state variable which holds result of validation of from to address object obtained from searching
+            from: false,
+            to: false
+          },
+          nearby_tourist_attractions: { attractions: [] },
+          nearby_lodgings: { lodgings: [] },
         }
+      }
 
 
     default:
