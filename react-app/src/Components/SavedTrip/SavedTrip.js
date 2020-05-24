@@ -48,8 +48,7 @@ class SavedTrip extends Component {
   componentWillMount() {
     if (this.props.credentials.response) {
       this.props.postloadtrips({ credentials: this.props.credentials.response.wc }).then(() => {
-        this.setSelectedTrip(this.props.savedTrips.root[0]);
-        this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places })
+
       })
     }
 
@@ -60,6 +59,7 @@ class SavedTrip extends Component {
     this.setState({
       selected: selected
     })
+    this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
 
   }
   // componentDidMount(){}
