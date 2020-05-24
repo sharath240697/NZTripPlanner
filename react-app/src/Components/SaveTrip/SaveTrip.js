@@ -21,7 +21,8 @@ const mapStateToProps = (state) => ({
     place_type: state.places.tourist_places.type,
     lodging_resturant_types: state.places.resturant_lodging_places.type,
     to_name: state.places.to.description,
-    from_name: state.places.from.description
+    from_name: state.places.from.description,
+    saveState: state.oauth.saveProgress
 
 });
 
@@ -53,7 +54,6 @@ class SaveTrip extends Component {
     }
 
     handleSave() {
-        // STUB call express endpoint to save the trip from here 
         const trip = this.buildTrip();
         console.log(trip);
         this.props.postsavetrip({ credentials: this.props.credentials.response.wc, trip: trip })
@@ -93,7 +93,10 @@ class SaveTrip extends Component {
         return (
             this.props.name !== undefined && (
                 <div>
-                    <Button onClick={() => this.handleClickOpen()}>Save Trip</Button>
+                    {this.props.saveState === "Done" ?
+                        <Button onClick={() => this.handleClickOpen()}>Save Trip</Button> :
+                        <p>Saving trip...</p>}
+
                     <Dialog
                         open={this.state.open}
                         onClose={() => this.handleClose()}
