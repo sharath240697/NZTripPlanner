@@ -20,6 +20,9 @@ const mapStateToProps = (state) => ({
     to_lng: state.places.to.place_location.lng,
     place_type: state.places.tourist_places.type,
     lodging_resturant_types: state.places.resturant_lodging_places.type,
+    to_name: state.places.to.description,
+    from_name: state.places.from.description
+
 });
 
 const mapDispathToProps = {
@@ -31,13 +34,21 @@ class SaveTrip extends Component {
         super(props);
 
         this.state = {
-            open: false
+            open: false,
+            name: "name"
         }
+        this.handleSetName = this.handleSetName.bind(this)
     }
 
     handleClickOpen() {
         this.setState({
             open: true
+        })
+    }
+
+    handleSetName(e) {
+        this.setState({
+            name: e.target.value
         })
     }
 
@@ -58,10 +69,14 @@ class SaveTrip extends Component {
                 to: {
                     id: this.props.to_placeId,
                     lat: this.props.to_lat,
-                    lng: this.props.to_lng
+                    lng: this.props.to_lng,
+                    name: this.props.to_name
                 },
-                from: this.props.from_placeId,
-                name: "name"
+                from: {
+                    id: this.props.from_placeId,
+                    name: this.props.from_name
+                },
+                name: this.state.name
             }
         }
         return trip;
@@ -90,9 +105,11 @@ class SaveTrip extends Component {
                         </DialogContentText>
                             <TextField
                                 autoFocus
+                                ref="TextField"
                                 id="name"
                                 label="Name"
                                 fullWidth
+                                onChange={this.handleSetName}
                             />
                         </DialogContent>
                         <DialogActions>

@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import "./TripTable.css";
 
-class SavedTrip extends Component {
+class TripTable extends Component {
   createData(name, to, from, date) {
     return { name, to, from, date };
   }
@@ -23,10 +23,9 @@ class SavedTrip extends Component {
   ];
 
   render() {
+    console.log("here in table" + this.props.trips.root);
     return (
       <div className="Table-Container">
-        <h3>Previous Trips:</h3>
-
         <TableContainer component={Paper}>
           <Table>
             <TableHead className="Header">
@@ -34,18 +33,16 @@ class SavedTrip extends Component {
                 <TableCell>Trip Name</TableCell>
                 <TableCell align="right">Source</TableCell>
                 <TableCell align="right">Destination</TableCell>
-                <TableCell align="right">Date</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {this.rows.map((row) => (
-                <TableRow key={row.name}>
+              {this.props.trips.root && this.props.trips.root.map((trip) => (
+                <TableRow className={trip === this.props.selected ? "Selected" : "unselected"} onClick={() => this.props.setSelected(trip)} key={trip.trip.name}>
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {trip.trip.name}
                   </TableCell>
-                  <TableCell align="right">{row.to}</TableCell>
-                  <TableCell align="right">{row.from}</TableCell>
-                  <TableCell align="right">{row.date}</TableCell>
+                  <TableCell align="right">{trip.trip.from.name}</TableCell>
+                  <TableCell align="right">{trip.trip.to.name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -56,4 +53,4 @@ class SavedTrip extends Component {
   }
 }
 
-export default SavedTrip;
+export default TripTable;

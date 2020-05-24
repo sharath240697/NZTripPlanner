@@ -5,7 +5,8 @@ export const initialState = {
         name: undefined,
         accessToken: undefined,
         loggedIn: false,
-    }
+    },
+    savedTrips: []
 }
 
 export default function oauthReducer(state = initialState, action) {
@@ -16,9 +17,16 @@ export default function oauthReducer(state = initialState, action) {
                 return { ...state, Credentials: action.payload }
             }
 
+        case actions.STORESAVEDTRIPS:
+            {
+                console.log('storing trips');
+                return { ...state, savedTrips: action.payload }
+            }
+
         default:
             {
                 return state;
             }
     }
 }
+
