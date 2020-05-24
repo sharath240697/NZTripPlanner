@@ -8,7 +8,8 @@ const {google} = require('googleapis');
 const fs = require('fs');
 const readline = require('readline');
 var downloaded_trip;
-
+var updated_trips;
+var update_status;
 
 
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
@@ -73,12 +74,14 @@ router.post('/saveTripDetails', async function (req, res, ) {
     });
     setTimeout(function(){
       console.log('after calling authorize method')
-      console.log(save_trip)
+      console.log(update_status)
+      res.send({status: update_status})
      
     }, 9000); 
   }
   catch (error) { 
-    console.log(error);
+    console.log({status: update_status});
+    res.send({status: update_status})
   }
 })
 
@@ -270,28 +273,40 @@ drive.files.list({
      for (var i = 0; i < files.length; i++) {
        var file = files[i];
        console.log('%s (%s)', file.name, file.id);
+
      }  
+     fs.readFile('./routes/credentials.json',async  (err, content) => {
+      if (err) return console.log('Error loading client secret file:', err);
+     const data = await authorize(JSON.parse(content),downloadTripDetails, req_body);
+     setTimeout(function(){
+      console.log('inside drive update method')
+      console.log(downloaded_trip)
+      const fileMetadata = {
+        'name': 'NZTripPlanDetails.json',
+        };
+      var media = {
+        mimeType: 'application/json',
+        //Change to trip details that needs to be updated
+        body: JSON.stringify({root: tripdetailseditor(downloaded_trip.root,req_body.trip)})
+      }
+      drive.files.update({
+        fileId: file.id,
+        resource: fileMetadata,
+        media: media,
+      }, (err, file) => {
+        if (err) {
+          // Handle error
+          console.error(err);
+          update_status = 'error'
+        } else {
+          console.log('updated File Id: ', file.id);
+          update_status = 'success'
+        }
+      });
+    }, 9000);   
+    })
 //update the contets of the file
-const fileMetadata = {
-  'name': 'NZTripPlanDetails.json',
-  };
-var media = {
-  mimeType: 'application/json',
-  //Change to trip details that needs to be updated
-  body: JSON.stringify({root: [{...req_body.trip}]})
-}
-drive.files.update({
-  fileId: file.id,
-  resource: fileMetadata,
-  media: media,
-}, (err, file) => {
-  if (err) {
-    // Handle error
-    console.error(err);
-  } else {
-    console.log('updated File Id: ', file.id);
-  }
-});
+
    }
   }
   );
@@ -328,7 +343,7 @@ if (err) {
     parents: [parents]//folder name in the drive, will change
   };
   //save trip related details here
-  var jsonData = req_body.trip
+  var jsonData = {root: [req_body.trip]}
   var jsonContent = JSON.stringify(jsonData);
   console.log('jsonContent is'+jsonContent);
 
@@ -344,7 +359,9 @@ if (err) {
     if (err) {
       console.log('inside error  save files');
       console.error(err);
+      update_status = 'error'
     } else {
+      update_status = 'success'
       console.log('File Id: ', file.data.id);
     }
   });
@@ -417,3 +434,20 @@ if (err) {
   console.log(data);
     }
 
+
+
+function tripdetailseditor(gdrive_trips,new_trips)
+{
+  console.log(gdrive_trips)
+  console.log(new_trips)
+  let index = gdrive_trips.findIndex(trip => trip.id === new_trips.id);
+  if (index === -1) {
+    gdrive_trips.push(new_trips)
+  }
+ else{
+   gdrive_trips[index] = new_trips;
+ }
+  return gdrive_trips;
+
+
+}
