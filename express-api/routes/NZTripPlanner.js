@@ -9,6 +9,8 @@ const fs = require('fs');
 const readline = require('readline');
 var downloaded_trip;
 
+
+
 Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
 
 router.get('/', function(req, res) {
@@ -71,7 +73,7 @@ router.post('/saveTripDetails', async function (req, res, ) {
     });
     setTimeout(function(){
       console.log('after calling authorize method')
-      console.log(downloaded_trip)
+      console.log(save_trip)
      
     }, 9000); 
   }
@@ -98,7 +100,13 @@ router.post('/downloadTripDetails', async function (req, res, ) {
      setTimeout(function(){
       console.log('after calling authorize method')
       console.log(downloaded_trip)
-      res.send(downloaded_trip)
+      if(downloaded_trip===undefined)
+      {
+        res.send({root: []})
+      }
+      else{
+        res.send(downloaded_trip)
+      }
     }, 9000); 
     });
   }
@@ -408,3 +416,4 @@ if (err) {
   console.log('at end') 
   console.log(data);
     }
+
