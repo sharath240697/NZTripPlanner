@@ -51,6 +51,7 @@ class SavedTrip extends Component {
       this.setState({ loading: true });
       this.props.postloadtrips({ credentials: this.props.credentials.response.wc }).then(() => {
         this.setState({ loading: false });
+        this.setSelectedTrip(this.props.savedTrips.root[0]);
       })
     }
 
@@ -61,7 +62,6 @@ class SavedTrip extends Component {
     this.setState({
       selected: selected
     })
-    this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
   }
 
   //componentDidMount() {}
@@ -88,7 +88,6 @@ class SavedTrip extends Component {
             browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }}
             waypoints={this.state.selected.trip.placesOnMap} />}
 
-          <NearbyPlaces />
         </div>) :
         (<p>Whoops... You need to log in with google to view saved trips</p>)
     );
