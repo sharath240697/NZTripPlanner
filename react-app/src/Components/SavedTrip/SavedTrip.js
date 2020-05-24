@@ -39,7 +39,8 @@ class SavedTrip extends Component {
           places: ""
         }
       },
-      savedTrips: []
+      savedTrips: [],
+      loading: false
     };
 
     this.setSelectedTrip = this.setSelectedTrip.bind(this)
@@ -47,8 +48,9 @@ class SavedTrip extends Component {
 
   componentWillMount() {
     if (this.props.credentials.response) {
+      this.setState({ loading: true });
       this.props.postloadtrips({ credentials: this.props.credentials.response.wc }).then(() => {
-
+        this.setState({ loading: false });
       })
     }
 
@@ -59,22 +61,24 @@ class SavedTrip extends Component {
     this.setState({
       selected: selected
     })
-  }
-  // componentDidMount(){}
-  // componentWillUnmount(){}
-
-  // componentWillReceiveProps(){}
-  // shouldComponentUpdate(){}
-  // componentWillUpdate(){}
-  componentDidUpdate() {
     this.props.fetchnearbyplaces({ lat: this.state.selected.trip.to.lat, lng: this.state.selected.trip.to.lng, place_type: this.props.place_type, resturant_lodging_places: this.props.resturant_lodging_places });
   }
+
+  //componentDidMount() {}
+  // componentWillUnmount(){}
+
+  componentWillReceiveProps() { }
+  // shouldComponentUpdate(){}
+  // componentWillUpdate(){}
+  // componentDidUpdate() {}
 
   render() {
     return (
       this.props.credentials.response ? (
         <div className="SavedTrip">
-          <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
+          {this.state.loading ? <p className="TripTable">Loading...</p> :
+            <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
+          }
           <MapComponentDefault origin={this.state.selected.trip.from} destination={this.state.selected.trip.to.id} browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }} waypoints={this.state.selected.trip.placesOnMap} />
           <NearbyPlaces />
         </div>) :

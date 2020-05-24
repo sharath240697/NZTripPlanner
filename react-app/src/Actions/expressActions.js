@@ -93,7 +93,6 @@ export function postsavetrip(data) {
             })
             const result = await savedDetails.json();
             console.log(result);
-            dispatch(actions.saveOathDetails(result));
 
         } catch (error) {
             console.log('BIGG FATTT ERROOORRR! in expressActions.js saveOathDetails method')
