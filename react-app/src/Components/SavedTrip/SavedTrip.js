@@ -3,7 +3,7 @@ import TripTable from "../TripTable/TripTable";
 import "./SavedTrip.css";
 import { postloadtrips } from '../../Actions/expressActions'
 import { connect } from "react-redux";
-import MapComponentDefault from "../MapComponent/MapComponentDefault";
+import MapComponent from "../MapComponent/MapComponent";
 import NearbyPlaces from "../NearbyPlaces/NearbyPlaces";
 import { fetchnearbyplaces } from '../../Actions/expressActions';
 
@@ -80,6 +80,13 @@ class SavedTrip extends Component {
             <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
           }
           <MapComponentDefault origin={this.state.selected.trip.from} destination={this.state.selected.trip.to.id} browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }} waypoints={this.state.selected.trip.placesOnMap} />
+          <TripTable setSelected={this.setSelectedTrip} trips={this.props.savedTrips} selected={this.state.selected} className="TripTable" />
+          {this.state.selected.trip.placesOnMap !== undefined && console.log(this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1])}
+          {this.state.selected.trip.placesOnMap !== undefined && <MapComponent
+            origin={this.state.selected.trip.to.id}
+            destination={this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1]}
+            browser={{ lat: this.props.browser_lat, lng: this.props.browser_lng }}
+            waypoints={this.state.selected.trip.placesOnMap.filter(waypoint => waypoint !== this.state.selected.trip.placesOnMap[this.state.selected.trip.placesOnMap.length - 1])} />}
           <NearbyPlaces />
         </div>) :
         (<p>Whoops... You need to log in with google to view saved trips</p>)

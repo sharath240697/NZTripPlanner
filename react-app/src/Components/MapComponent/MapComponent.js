@@ -29,16 +29,28 @@ class MapComponent extends React.Component {
         componentDidMount() {
           console.log('in did mount method')
           console.log(this.props.waypoints)
+          console.log(this.props.origin)
+          console.log(this.props.destination)
+          console.log({
+            origin: {placeId: this.props.origin},
+            destination: {placeId: this.props.destination},
+            //{placeId: "ChIJ--acWvtHDW0RF5miQ2HvAAU"} this.props.origin.lat, this.props.origin.lng
+            waypoints:  this.props.waypoints.map(place_id => {
+                return {stopover: true,
+                  location: {'placeId': place_id}}
+            }),
+            travelMode: google.maps.TravelMode.DRIVING
+
+
+          })
           const DirectionsService = new google.maps.DirectionsService();
           DirectionsService.route({
-            origin: { placeId: this.props.origin },
-            destination: { placeId: this.props.destination },
+            origin: {placeId: this.props.origin},
+            destination: {placeId: this.props.destination},
             //{placeId: "ChIJ--acWvtHDW0RF5miQ2HvAAU"} this.props.origin.lat, this.props.origin.lng
-            waypoints: this.props.waypoints.map(place_id => {
-              return {
-                stopover: true,
-                location: { 'placeId': place_id }
-              }
+            waypoints:  this.props.waypoints.map(place_id => {
+                return {stopover: true,
+                  location: {'placeId': place_id}}
             }),
             travelMode: google.maps.TravelMode.DRIVING
 
