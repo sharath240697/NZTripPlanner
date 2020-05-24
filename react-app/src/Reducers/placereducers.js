@@ -3,6 +3,7 @@
 import * as actions from '../Actions/actions'
 
 export const initialState = {
+  saveProgress: "Done",
   from: {
     placeholder: "From",
     description: "",
@@ -141,6 +142,26 @@ export default function placeReducer(state = initialState, action) {
       {
         return { ...state, placesOnMap: [...state.placesOnMap.filter((place) => place.id !== action.payload.id)] }
       }
+
+      case actions.SETSAVEPROGRESS:
+        {
+            console.log('progress update');
+            return { ...state, saveProgress: action.payload, from: {
+              placeholder: "From",
+              description: "",
+              placeId: "",
+              types: [],
+              place_location: { lat: undefined, lng: undefined }
+            },
+            to: {
+              placeholder: "To",
+              description: "",
+              placeId: "",
+              types: [],
+              place_location: { lat: undefined, lng: undefined }
+            } }
+        }
+
 
     default:
       return state

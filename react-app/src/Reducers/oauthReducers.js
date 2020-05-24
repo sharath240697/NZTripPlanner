@@ -6,8 +6,7 @@ export const initialState = {
         accessToken: undefined,
         loggedIn: false,
     },
-    savedTrips: [],
-    saveProgress: "Done"
+    savedTrips: []
 }
 
 export default function oauthReducer(state = initialState, action) {
@@ -25,12 +24,7 @@ export default function oauthReducer(state = initialState, action) {
                 return { ...state, savedTrips: action.payload }
             }
 
-        case actions.SETSAVEPROGRESS:
-            {
-                console.log('progress update');
-                return { ...state, saveProgress: action.payload }
-            }
-
+       
         default:
             {
                 return state;

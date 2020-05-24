@@ -22,7 +22,7 @@ const mapStateToProps = (state) => ({
     lodging_resturant_types: state.places.resturant_lodging_places.type,
     to_name: state.places.to.description,
     from_name: state.places.from.description,
-    saveState: state.oauth.saveProgress
+    saveState: state.places.saveProgress
 
 });
 
