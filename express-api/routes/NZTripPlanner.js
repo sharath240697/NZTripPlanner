@@ -77,7 +77,7 @@ router.post('/saveTripDetails', async function (req, res, ) {
       console.log(update_status)
       res.send({status: update_status})
      
-    }, 9000); 
+    }, 4000); 
   }
   catch (error) { 
     console.log({status: update_status});
@@ -110,7 +110,7 @@ router.post('/downloadTripDetails', async function (req, res, ) {
       else{
         res.send(downloaded_trip)
       }
-    }, 9000); 
+    }, 4000); 
     });
   }
   catch (error) {
@@ -303,7 +303,7 @@ drive.files.list({
           update_status = 'success'
         }
       });
-    }, 9000);   
+    }, 4000);   
     })
 //update the contets of the file
 
