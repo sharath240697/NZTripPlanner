@@ -4,13 +4,28 @@
 
 .SavedTrip {
   text-align: left;
-  padding-left: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 h3 {
   padding: 0 0 15px 0;
 }
 
-.TripTable {
+.SavedTrip .TripTable {
   max-width: 80%;
+}
+
+.SavedTrip .MapComponent {
+  width: 30%;
+}
+
+.SavedTrip .NearbyPlaces {
+  width: 30%;
+}
+
+p {
+  opacity: 0.5;
+  font-size: 1.2rem;
 }

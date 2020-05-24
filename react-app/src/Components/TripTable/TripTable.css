@@ -1,7 +1,11 @@
 .Table-Container {
-  max-width: 80%;
+  width: 30%;
 }
 
 .Header .MuiTableCell-head {
   font-weight: 700;
+}
+
+.Selected {
+  background-color: rgb(218, 218, 218);
 }

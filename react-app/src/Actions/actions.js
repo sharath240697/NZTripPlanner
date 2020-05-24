@@ -10,6 +10,8 @@ export const ADDPLACETOMAP = 'ADDPLACETOMAP'
 export const REMOVEPLACEFROMMAP = 'REMOVEPLACEFROMMAP'
 export const SAVEOAUTHDATA = 'SAVEOAUTHDATA'
 export const STOREWEATHER = 'STOREWEATHER'
+export const STORESAVEDTRIPS = 'STORESAVEDTRIPS'
+export const SETSAVEPROGRESS = 'SETSAVEPROGRESS'
 
 export const updateFromPlace = from => ({
   type: CHANGE_FROM_PLACE,
@@ -98,6 +100,20 @@ export const saveOathDetails = (data) => {
 export const storeweatherdata = (data) => {
   return {
     type: STOREWEATHER,
+    payload: data
+  }
+}
+
+export const storeSavedTrips = (data) => {
+  return {
+    type: STORESAVEDTRIPS,
+    payload: data
+  }
+}
+
+export const setSaveProgress = (data) => {
+  return {
+    type: SETSAVEPROGRESS,
     payload: data
   }
 }
