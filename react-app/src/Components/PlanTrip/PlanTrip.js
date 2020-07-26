@@ -49,6 +49,7 @@ const PlanTrip = (props) => {
     const type = [];  // type of near by places to be fetched should be defined
     console.log(props.from_validation + ' props.from_validation');
     console.log(props.to_validation + ' props.to_validation');
+ 
     console.log("in Plantrip component navigate function")  // if else block validates from to lat lng value and dispatches appropriate actions 
     if (props.from_validation && props.to_validation) {
       props.fetchnearbyplaces({ lat: props.to_lat, lng: props.to_lng, places_type: props.place_type, resturant_type: props.lodging_resturant_types })  // redux thunks dispatch
@@ -76,6 +77,7 @@ const PlanTrip = (props) => {
     // console.log(props.credentials)
     const access = props.credentials.response.wc;
     console.log(access)
+   
     props.postsavetrip({ credentials: access, trip: props.placesOnMap })
   }
 
@@ -87,8 +89,8 @@ const PlanTrip = (props) => {
         <Weather />
       </div>
       <div className="MapandPlacesContainer">
-        {props.from_validation && props.to_validation && <MapComponent origin={props.from_placeId} destination={props.to_placeId} browser={{ lat: props.browser_lat, lng: props.browser_lng }} waypoints={waypoints} ></MapComponent>}
-        {(!props.from_validation || !props.to_validation) && <MapComponentDefault browser={{ lat: props.browser_lat, lng: props.browser_lng }}></MapComponentDefault>}
+        {props.from_validation && props.to_validation && <MapComponent origin={props.from_placeId} destination={props.to_placeId} browser={{ lat: props.browser_lat, lng: props.browser_lng }} waypoints={waypoints} GAPIKey={props.credentials.GAPIKey} ></MapComponent>}
+        {(!props.from_validation || !props.to_validation) && <MapComponentDefault browser={{ lat: props.browser_lat, lng: props.browser_lng } } GAPIKey={props.credentials.GAPIKey}></MapComponentDefault>}
 
         <NearbyPlaces func={navigate()} />
       </div>

@@ -5,6 +5,7 @@ export const initialState = {
         name: undefined,
         accessToken: undefined,
         loggedIn: false,
+        GAPIKey: //"<API_KEY>"
     },
     savedTrips: []
 }
