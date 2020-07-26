@@ -18,7 +18,7 @@ class MapComponent extends React.Component {
         waypoints: this.props.waypoints,
         browser: this.props.browser,
         googleMapURL:
-          "https://maps.googleapis.com/maps/api/js?key=AIzaSyBjwnK_zvDGQokuzDJ0NVnR979L_KNEYuo&libraries=geometry,drawing,places",
+        "https://maps.googleapis.com/maps/api/js?key="+this.props.GAPIKey+"&libraries=geometry,drawing,places",
         loadingElement: <div style={{ height: `50%` }} />,
         containerElement: <div className="MapComponent" style={{ height: `600px` }} />,
         mapElement: <div style={{ height: `100%` }} />,

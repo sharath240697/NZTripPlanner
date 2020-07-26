@@ -10,9 +10,10 @@ const readline = require('readline');
 var downloaded_trip;
 var updated_trips;
 var update_status;
+const GAPIKey =  //"<API_KEY>"
 
+Places.apiKey = GAPIKey;
 
-Places.apiKey = "AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY";
 
 router.get('/', function(req, res) {
     res.send({status: 'success', message: 'this works!'})
@@ -43,8 +44,9 @@ router.post('/nearbyplaces', async function(req, res, ){
          console.log(typeof obj.photos)
           if(typeof obj.photos!=='undefined')
           {
-            const url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+obj.photos[0].photo_reference+'&key=AIzaSyAvri8O_Xgk3dGV84-tyQ2KnSsCqhQmYJY'
-          const image_url = await fetch(url);
+            const url = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='+obj.photos[0].photo_reference+'&key='+GAPIKey;
+          
+            const image_url = await fetch(url);
           obj.img_url = image_url.url; 
           obj.img_alt =  'available';
           }
